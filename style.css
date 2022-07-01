@@ -8,7 +8,7 @@
 html,
 body {
   background-color: #201f20;
-  overscroll-behavior: contain;
+  overscroll-behavior: none;
 }
 
 .grid {
