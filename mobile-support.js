@@ -6,7 +6,7 @@ let touchEndY = 0
 function checkDirection() {
   const yDiff = Math.abs(touchStartY - touchEndY);
   const xDiff = Math.abs(touchStartX - touchEndX);
-  if (xDiff > yDiff) {
+  if (xDiff > yDiff && xDiff > 20) {
     if (touchEndX < touchStartX) {
       // SWIPED LEFT
       cursorPos = {x: Math.max(cursorPos.x - 1, 0), y: cursorPos.y}
@@ -15,7 +15,8 @@ function checkDirection() {
       // SWIPED RIGHT
       cursorPos = {x: Math.min(cursorPos.x + 1, GRID_WIDTH_SIZE - 2), y: cursorPos.y}
     }
-  } else {
+  }
+  if (xDiff < yDiff && yDiff > 20) {
     if (touchEndY < touchStartY) {
       // SWIPED UP
       cursorPos = {x: cursorPos.x, y: Math.max(cursorPos.y - 1, 0)}
