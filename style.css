@@ -5,8 +5,10 @@
   --cell-height-m: calc(var(--cell-height) + 4px);
 }
 
+html,
 body {
   background-color: #201f20;
+  overscroll-behavior-y: contain;
 }
 
 .grid {
