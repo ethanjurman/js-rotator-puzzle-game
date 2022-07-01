@@ -1,14 +1,11 @@
-const SHAPES = ['cube'];
 const COLORS = ['color1', 'color2', 'color3', 'color4'];
 const GRID_WIDTH_SIZE = 8;
 const GRID_HEIGHT_SIZE = 8;
 
 let cursorPos = {x: 0, y: 0};
 let createHold = false;
-
-const getRandomShape = () => {
-  return SHAPES[Math.floor(Math.random() * SHAPES.length)];
-}
+let scoreValue = 0;
+let newScoreValue = 0;
 
 const getRandomColor =
 () => {
@@ -18,13 +15,11 @@ const getRandomColor =
 const makeCell = (x, y) => {
     const cell = document.createElement('div');
     const color = getRandomColor();
-    const shape = getRandomShape();
-    cell.setAttribute('class', `cell ${color} ${shape}`);
+    cell.setAttribute('class', `cell ${color}`);
     cell.style = `left: ${54 * x}px; top: ${54 * y}px;`
     cell.dataset.x = x;
     cell.dataset.y = y;
     cell.dataset.color = color;
-    cell.dataset.shape = shape;
     return cell;
 } 
 
@@ -32,6 +27,26 @@ const makeCursor = () => {
   const cursor = document.createElement('div');
   cursor.setAttribute('class', 'cursor');
   return cursor;
+}
+
+const makeScore = () => {
+  const score = document.createElement('div');
+  score.setAttribute('class', 'score');
+  score.textContent = 0;
+  return score;
+}
+
+const updateScore = () => {
+  if (scoreValue === newScoreValue) {
+    return;
+  }
+  const score = document.querySelector('.score');
+  for (let i = scoreValue; i < newScoreValue + 1; i++) {
+    setTimeout(() => {
+      score.textContent = i
+    }, (i - scoreValue) * 50);
+  }
+  scoreValue = newScoreValue;
 }
 
 const makeGrid = () => {
@@ -45,6 +60,8 @@ const makeGrid = () => {
       grid.appendChild(makeCell(i, j))
     }
   }
+
+  grid.appendChild(makeScore())
 }
 
 makeGrid();
@@ -66,7 +83,6 @@ document.onkeydown = (ev) => {
     rotateCells();
   }
   updateCursor();
-  clearRows();
 }
 
 const updateCursor = () => {
@@ -108,7 +124,8 @@ const clearColumns = () => {
       }
     }
     if (color && color !== 'UNREGISTERED') {
-      const cells = document.querySelectorAll(`[data-x="${i}"]`)
+      const cells = document.querySelectorAll(`[data-x="${i}"]`);
+      newScoreValue = scoreValue + cells.length;
       cells.forEach(cell => cell.classList.add('remove'));
       setTimeout(() => {
         cells.forEach(cell => cell.remove());
@@ -137,6 +154,7 @@ const clearRows = () => {
     }
     if (color && color !== 'UNREGISTERED') {
       const cells = document.querySelectorAll(`[data-y="${i}"]`);
+      newScoreValue = scoreValue + cells.length;
       cells.forEach(cell => cell.classList.add('remove'));
       setTimeout(() => {
         cells.forEach(cell => cell.remove());
@@ -187,6 +205,7 @@ function step() {
       createHold = true;
     }
   }
+  updateScore()
   setTimeout(() => {
     window.requestAnimationFrame(step);
   }, 100)
