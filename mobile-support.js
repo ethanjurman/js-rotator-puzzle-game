@@ -56,7 +56,6 @@ document.addEventListener('click', (ev) => {
   }
   if (ev.target.classList.contains('clickPoint')) {
     cursorPos = {x: Number(ev.target.dataset.clickX), y: Number(ev.target.dataset.clickY)}
-    console.log({cursorPos})
     updateCursor();
     rotateCells();
   }
