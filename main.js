@@ -28,6 +28,18 @@ const makeCell = (x, y) => {
     return cell;
 } 
 
+const makeClickPoint = (x, y) => {
+  if (x >= GRID_HEIGHT_SIZE - 1 || y >= GRID_WIDTH_SIZE - 1) {
+    return document.createElement('div');
+  }
+  const clickPoint = document.createElement('div');
+  clickPoint.setAttribute('class', `clickPoint`);
+  clickPoint.style = `left: ${(CELL_WIDTH * x) + 75}px; top: ${(CELL_HEIGHT * y) + 75}px;`
+  clickPoint.dataset.clickX = x;
+  clickPoint.dataset.clickY = y;
+  return clickPoint;
+} 
+
 const makeCursor = () => {
   const cursor = document.createElement('div');
   cursor.setAttribute('class', 'cursor');
@@ -59,14 +71,15 @@ const makeGrid = () => {
   const grid = document.createElement('div');
   grid.setAttribute('class', 'grid');
   document.body.appendChild(grid);
-  grid.appendChild(makeCursor());
-
+  
   for (let i = 0; i < GRID_WIDTH_SIZE; i++) {
     for (let j = 0; j < GRID_HEIGHT_SIZE; j++) {
+      grid.appendChild(makeClickPoint(i, j));
       grid.appendChild(makeCell(i, j))
     }
   }
-
+  
+  grid.appendChild(makeCursor());
   grid.appendChild(makeScore())
 }
 
@@ -77,16 +90,16 @@ document.onkeydown = (ev) => {
     return;
   }
   if (ev.key === 'w' || ev.key === 'ArrowUp') {
-    cursorPos = {x: cursorPos.x, y: Math.max(cursorPos.y - 1, 0)}
+    cursorPos = {x: cursorPos.x, y: cursorPos.y ? cursorPos.y - 1 : GRID_HEIGHT_SIZE - 2}
   }
   if (ev.key === 'a' || ev.key === 'ArrowLeft') {
-    cursorPos = {x: Math.max(cursorPos.x - 1, 0), y: cursorPos.y}
+    cursorPos = {x: cursorPos.x ? cursorPos.x - 1 : GRID_WIDTH_SIZE - 2, y: cursorPos.y}
   }
   if (ev.key === 's' || ev.key === 'ArrowDown') {
-    cursorPos = {x: cursorPos.x, y: Math.min(cursorPos.y + 1, GRID_HEIGHT_SIZE - 2)}
+    cursorPos = {x: cursorPos.x, y: (cursorPos.y + 1) % (GRID_HEIGHT_SIZE - 1)}
   }
   if (ev.key === 'd' || ev.key === 'ArrowRight') {
-    cursorPos = {x: Math.min(cursorPos.x + 1, GRID_WIDTH_SIZE - 2), y: cursorPos.y}
+    cursorPos = {x: (cursorPos.x + 1) % (GRID_WIDTH_SIZE - 1), y: cursorPos.y}
   }
   if (ev.key === ' ') {
     rotateCells();

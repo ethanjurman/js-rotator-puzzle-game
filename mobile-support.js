@@ -29,6 +29,7 @@ function checkDirection() {
       cursorPos = {x: cursorPos.x, y: Math.min(cursorPos.y + 1, GRID_HEIGHT_SIZE - 2)}
     }
   }
+  console.log({cursorPos})
   updateCursor();
 }
 
@@ -48,20 +49,15 @@ document.addEventListener('touchend', e => {
 
 let clickStatus = false;
 let timeout;
-document.addEventListener('click', () => {
+
+document.addEventListener('click', (ev) => {
   if (endGame) {
     return;
   }
-  // time to check if we've clicked recently enough
-  // if (clickStatus === true) {
-  //   clickStatus = false;
-  rotateCells();
-  //   clearTimeout(timeout);
-  // }
-  // clickStatus = true;
-
-  // reset click status after a set amount of time
-  // timeout = setTimeout(() => {
-  //   clickStatus = false;
-  // }, 500);
+  if (ev.target.classList.contains('clickPoint')) {
+    cursorPos = {x: Number(ev.target.dataset.clickX), y: Number(ev.target.dataset.clickY)}
+    console.log({cursorPos})
+    updateCursor();
+    rotateCells();
+  }
 });
