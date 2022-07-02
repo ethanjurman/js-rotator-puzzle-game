@@ -53,15 +53,15 @@ document.addEventListener('click', () => {
     return;
   }
   // time to check if we've clicked recently enough
-  if (clickStatus === true) {
-    clickStatus = false;
-    rotateCells();
-    clearTimeout(timeout);
-  }
-  clickStatus = true;
+  // if (clickStatus === true) {
+  //   clickStatus = false;
+  rotateCells();
+  //   clearTimeout(timeout);
+  // }
+  // clickStatus = true;
 
   // reset click status after a set amount of time
-  timeout = setTimeout(() => {
-    clickStatus = false;
-  }, 500);
+  // timeout = setTimeout(() => {
+  //   clickStatus = false;
+  // }, 500);
 });
