@@ -1,3 +1,13 @@
+/* remove blue highlight */
+input,
+textarea,
+button,
+select,
+div,
+a {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
 :root {
   --cells-wide: 6;
   --cells-high: 6;
