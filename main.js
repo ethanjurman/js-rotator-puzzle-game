@@ -63,7 +63,7 @@ const updateScore = () => {
       score.textContent = i
     }, (i - scoreValue) * 50);
   }
-  timerMS = timerMS + ((newScoreValue - scoreValue) * 500);
+  addToTimer((newScoreValue - scoreValue) * 500);
   scoreValue = newScoreValue;
 }
 

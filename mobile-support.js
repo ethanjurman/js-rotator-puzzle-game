@@ -29,7 +29,6 @@ function checkDirection() {
       cursorPos = {x: cursorPos.x, y: Math.min(cursorPos.y + 1, GRID_HEIGHT_SIZE - 2)}
     }
   }
-  console.log({cursorPos})
   updateCursor();
 }
 
@@ -57,6 +56,8 @@ document.addEventListener('click', (ev) => {
   if (ev.target.classList.contains('clickPoint')) {
     cursorPos = {x: Number(ev.target.dataset.clickX), y: Number(ev.target.dataset.clickY)}
     updateCursor();
+    rotateCells();
+  } else {
     rotateCells();
   }
 });

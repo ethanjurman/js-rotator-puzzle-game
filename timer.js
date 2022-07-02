@@ -1,10 +1,21 @@
 let startTime = -1;
 let timerMS = 90000;
 
+const msToSecondsString = (ms, padding) => {
+  ms = `${ms}`
+  return `${ms.slice(0, -3).padStart(padding, "0") || 0}:${ms.slice(-3).padStart(padding, "0")}`
+}
+
 const makeTimer = () => {
+  const timerContainer = document.createElement('div');
+  timerContainer.setAttribute('class', 'timerContainer');
+  document.body.appendChild(timerContainer);
   const timer = document.createElement('div');
   timer.setAttribute('class', 'timer');
-  document.body.appendChild(timer);
+  timerContainer.appendChild(timer);
+  const bonusTimer = document.createElement('div');
+  bonusTimer.setAttribute('class', 'bonusTimer');
+  timerContainer.appendChild(bonusTimer);
 }
 
 const updateTimer = () => {
@@ -12,7 +23,8 @@ const updateTimer = () => {
   const timer = document.querySelector('.timer');
   const newTime = timerMS - (currentTime - startTime);
   if (timer) {
-    timer.textContent = Math.max(newTime, 0);
+    const newTimeString = `${Math.max(newTime, 0)}`
+    timer.textContent = msToSecondsString(newTimeString, 3)
   }
   if (newTime < 0) {
     endGame = true;
@@ -24,6 +36,12 @@ const startTimer = () => {
 }
 
 const addToTimer = (timeToAdd) => {
+  const bonusTimer = document.querySelector('.bonusTimer');
+  bonusTimer.textContent = `+${msToSecondsString(timeToAdd, 0)}`;
+  bonusTimer.classList.add('showBonusTimer');
+  setTimeout(() => {
+    bonusTimer.classList.remove('showBonusTimer');
+  }, 1000)
   timerMS += timeToAdd;
 }
 

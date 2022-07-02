@@ -99,7 +99,7 @@ body {
   background-color: #392F5A;
   border-radius: 0px 0px 20px 20px;
   text-align: center;
-  font-family: sans-serif;
+  font-family: monospace;  
   font-weight: bold;
   color: white;
   font-size: 26px;
@@ -124,7 +124,7 @@ body {
   transition: height 0.3s, width 0.3s;
 }
 
-.timer {
+.timerContainer {
   color: white;
   background: #392f5a;
   display: inline-block;
@@ -132,12 +132,28 @@ body {
   border-radius: 40px;
   text-align: center;
   font-size: 30px;
-  font-family: sans-serif;
+  font-family: monospace;
   font-weight: bolder;
   position: absolute;
   width: 364px;
   left: calc(50% - 200px);
   top: -12px;
+}
+
+.bonusTimer {
+  color: #73C05D;
+  display: inline-block;
+  right: 25px;
+  opacity: 0;
+  top: 30px;
+  transition: all 0.2s;
+  overflow: auto;
+  float: right;
+  position: absolute;
+}
+.showBonusTimer {
+  opacity: 1;
+  top: 10px;
 }
 
 .clickPoint {    
@@ -146,6 +162,6 @@ body {
   width: 80px;
   height: 80px;
   z-index: 9;
-  border-radius: 38px;
+  border-radius: 20px;
   transform: translate(-38px, -38px);
 }
