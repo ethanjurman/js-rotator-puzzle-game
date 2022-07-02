@@ -4,6 +4,9 @@ let touchStartY = 0
 let touchEndY = 0
     
 function checkDirection() {
+  if (endGame) {
+    return;
+  }
   const yDiff = Math.abs(touchStartY - touchEndY);
   const xDiff = Math.abs(touchStartX - touchEndX);
   if (xDiff > yDiff && xDiff > 20) {
@@ -35,6 +38,9 @@ document.addEventListener('touchstart', e => {
 })
 
 document.addEventListener('touchend', e => {
+  if (endGame) {
+    return;
+  }
   touchEndX = e.changedTouches[0].screenX
   touchEndY = e.changedTouches[0].screenY
   checkDirection()
@@ -43,6 +49,9 @@ document.addEventListener('touchend', e => {
 let clickStatus = false;
 let timeout;
 document.addEventListener('click', () => {
+  if (endGame) {
+    return;
+  }
   // time to check if we've clicked recently enough
   if (clickStatus === true) {
     clickStatus = false;

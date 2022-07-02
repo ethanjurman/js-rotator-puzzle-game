@@ -1,4 +1,6 @@
 :root {
+  --cells-wide: 6;
+  --cells-high: 6;
   --cell-width: 50px;
   --cell-height: 50px;
   --cell-width-m: calc(var(--cell-width) + 4px);
@@ -14,7 +16,7 @@ body {
 .grid {
   width: calc(var(--cell-width-m) * 8);
   height: calc(var(--cell-height-m) * 8);
-  margin: 0 auto;
+  margin: 30px auto;
   background-color: #392F5A;
   border-radius: 20px;
   position: relative;
@@ -29,37 +31,41 @@ body {
   margin: 2px;
   position: absolute;
   transition: all 0.07s;
-  transform: translate(10px, 10px);
+  transform: translate(16px, 16px);
   border-radius: 10px;
   box-shadow: 0px 2px 2px #201f20;
 }
 
 .color1 {
   background-color: #FF9933;
+  border: 2px solid #FF9933;
 }
 
 .color2 {
   background-color: #F4D06F;
+  border: 2px solid #F4D06F;
 }
 
 .color3 {
   background-color: #C091CA;
+  border: 2px solid #C091CA;
 }
 
 .color4 {
   background-color: #5DC0B5;
+  border: 2px solid #5DC0B5;
 }
 
 .cursor {
-  height: calc(var(--cell-height-m) * 2);
-  width: calc(var(--cell-width-m) * 2);
+  height: calc((var(--cell-height-m) + 12px) * 2);
+  width: calc((var(--cell-width-m) + 12px) * 2);
   position: absolute;
   border: 6px solid #C3DFE0;
   border-radius: 20px;
   top: 0px;
   left: 0px;
   transition: all 0.05s;
-  transform: translate(4px, 4px);
+  transform: translate(8px, 8px);
   z-index: 9999;
 }
 .cursor:before {
@@ -79,7 +85,7 @@ body {
   left: calc(50% - 150px);
   bottom: -40px;
   width: 300px;
-  height: 40px;
+  height: 42px;
   background-color: #392F5A;
   border-radius: 0px 0px 20px 20px;
   text-align: center;
@@ -87,15 +93,17 @@ body {
   font-weight: bold;
   color: white;
   font-size: 26px;
+  z-index: 0;
+  border-top: 2px solid #392F5A;
 }
 .score:before {
   content: " ";
   position: absolute;
   z-index: -1;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
+  top: -0px;
+  left: -0px;
+  right: -0px;
+  bottom: -0px;
   border-radius: 0px 0px 20px 20px;
   box-shadow: 0px 8px 12px black;
 }
@@ -104,4 +112,20 @@ body {
   height: 0px;
   width: 0px;
   transition: height 0.3s, width 0.3s;
+}
+
+.timer {
+  color: white;
+  background: #392f5a;
+  display: inline-block;
+  padding: 10px;
+  border-radius: 40px;
+  text-align: center;
+  font-size: 30px;
+  font-family: sans-serif;
+  font-weight: bolder;
+  position: absolute;
+  width: 364px;
+  left: calc(50% - 200px);
+  top: -12px;
 }

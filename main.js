@@ -1,11 +1,16 @@
 const COLORS = ['color1', 'color2', 'color3', 'color4'];
-const GRID_WIDTH_SIZE = 8;
-const GRID_HEIGHT_SIZE = 8;
+const GRID_HEIGHT_SIZE = Number(getComputedStyle(document.documentElement)
+    .getPropertyValue('--cells-high')) || 6;
+const GRID_WIDTH_SIZE = Number(getComputedStyle(document.documentElement)
+    .getPropertyValue('--cells-wide')) || 6;
+const CELL_HEIGHT = (400 / GRID_HEIGHT_SIZE) + 4;
+const CELL_WIDTH = (400 / GRID_WIDTH_SIZE) + 4;
 
 let cursorPos = {x: 0, y: 0};
 let createHold = false;
 let scoreValue = 0;
 let newScoreValue = 0;
+let endGame = false;
 
 const getRandomColor =
 () => {
@@ -16,7 +21,7 @@ const makeCell = (x, y) => {
     const cell = document.createElement('div');
     const color = getRandomColor();
     cell.setAttribute('class', `cell ${color}`);
-    cell.style = `left: ${54 * x}px; top: ${54 * y}px;`
+    cell.style = `left: ${CELL_WIDTH * x}px; top: ${CELL_HEIGHT * y}px;`
     cell.dataset.x = x;
     cell.dataset.y = y;
     cell.dataset.color = color;
@@ -46,6 +51,7 @@ const updateScore = () => {
       score.textContent = i
     }, (i - scoreValue) * 50);
   }
+  timerMS = timerMS + ((newScoreValue - scoreValue) * 500);
   scoreValue = newScoreValue;
 }
 
@@ -67,6 +73,9 @@ const makeGrid = () => {
 makeGrid();
 
 document.onkeydown = (ev) => {
+  if (endGame) {
+    return;
+  }
   if (ev.key === 'w' || ev.key === 'ArrowUp') {
     cursorPos = {x: cursorPos.x, y: Math.max(cursorPos.y - 1, 0)}
   }
@@ -88,7 +97,7 @@ document.onkeydown = (ev) => {
 const updateCursor = () => {
   const cursor = document.querySelector('.cursor');
   const {x, y} = cursorPos;
-  cursor.style = `left: ${54 * x}px; top: ${54 * y}px;`
+  cursor.style = `left: ${CELL_WIDTH * x}px; top: ${CELL_HEIGHT * y}px;`
 }
 
 const getCellItem = (x,y) => {
@@ -99,12 +108,20 @@ const rotateCells = () => {
   const {x, y}= cursorPos;
   const cellsToRotate = [[x, y], [x + 1, y], [x + 1, y + 1], [x, y + 1]];
   const cellElements = cellsToRotate.map((pair) => getCellItem(pair[0],pair[1]));
-  cellElements.map((cellElement, index) => {
+  cellElements.forEach((cellElement, index) => {
+    if (!cellElement) {
+      return false;
+    }
     const [newX, newY] = cellsToRotate[(Number(index) + 1) % cellsToRotate.length]
     cellElement.dataset.x = newX;
     cellElement.dataset.y = newY;
-    cellElement.style = `left: ${54 * newX}px; top: ${54 * newY}px;`
+    cellElement.style = `left: ${CELL_WIDTH * newX}px; top: ${CELL_HEIGHT * newY}px;`
   });
+
+  // if this is the first rotate, let's start the timer;
+  if (startTime === -1) {
+    startTimer();
+  }
 }
 
 const clearColumns = () => {
@@ -174,7 +191,7 @@ const gravity = () => {
     }
     if (!getCellItem(Number(x), Number(y) + 1)) {
       cellElement.dataset.y = Number(y) + 1;
-      cellElement.style = `left: ${54 * x}px; top: ${54 * (Number(y) + 1)}px;`;
+      cellElement.style = `left: ${CELL_WIDTH * x}px; top: ${CELL_HEIGHT * (Number(y) + 1)}px;`;
     }
   }
 }
