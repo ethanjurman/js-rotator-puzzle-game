@@ -46,9 +46,15 @@ const addToTimer = (timeToAdd) => {
 }
 
 function stepTimer() {
+  const timer = document.querySelector('.timer');
+  if (timer.textContent == '000:000') {
+    timer.classList.add('timerStopped');
+    return;
+  }
   if (startTime !== -1) {
     updateTimer();
   }
+  
   setTimeout(() => {
     stepTimer();
   }, 10)

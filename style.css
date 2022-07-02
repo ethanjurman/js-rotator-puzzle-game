@@ -140,6 +140,10 @@ body {
   top: -12px;
 }
 
+.timerStopped {
+  color: #ff4b33;
+}
+
 .bonusTimer {
   color: #73C05D;
   display: inline-block;
