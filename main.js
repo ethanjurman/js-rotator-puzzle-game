@@ -120,6 +120,10 @@ const getCellItem = (x,y) => {
 }
 
 const rotateCells = () => {
+  const areItemsCurrentlyBeingRemoved = document.querySelector('.remove')
+  if (areItemsCurrentlyBeingRemoved) {
+    return;
+  }
   const {x, y}= cursorPos;
   const cellsToRotate = [[x, y], [x + 1, y], [x + 1, y + 1], [x, y + 1]];
   const cellElements = cellsToRotate.map((pair) => getCellItem(pair[0],pair[1]));
