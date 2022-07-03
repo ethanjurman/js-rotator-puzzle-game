@@ -158,11 +158,12 @@ const clearColumns = () => {
     if (color && color !== 'UNREGISTERED') {
       const cells = document.querySelectorAll(`[data-x="${i}"]`);
       const growingScore = newScoreValue - scoreValue;
+      console.log(`newScoreValue = ${scoreValue} + ${growingScore} + (${cells.length} * ${chain});`);
       newScoreValue = scoreValue + growingScore + (cells.length * chain);
       cells.forEach(cell => cell.classList.add('remove'));
       setTimeout(() => {
         cells.forEach(cell => cell.remove());
-      }, 100)
+      }, 200)
       wereItemsRemoved = true;
     }
   }
@@ -188,11 +189,12 @@ const clearRows = () => {
     if (color && color !== 'UNREGISTERED') {
       const cells = document.querySelectorAll(`[data-y="${i}"]`);
       const growingScore = newScoreValue - scoreValue;
+      console.log(`newScoreValue = ${scoreValue} + ${growingScore} + (${cells.length} * ${chain});`);
       newScoreValue = scoreValue + growingScore + (cells.length * chain);
       cells.forEach(cell => cell.classList.add('remove'));
       setTimeout(() => {
         cells.forEach(cell => cell.remove());
-      }, 100)
+      }, 200)
       wereItemsRemoved = true;
     }
   }
@@ -226,7 +228,6 @@ const makeTopCells = () => {
 }
 
 const step = () => {
-  gravity();
   const areItemsCurrentlyBeingRemoved = document.querySelector('.remove')
   if (createHold && !areItemsCurrentlyBeingRemoved) { // if create hold is true, allow clearing items
     const wereItemsRemovedFromColumns = clearColumns() && chain++;
@@ -236,6 +237,7 @@ const step = () => {
     }
   }
   if (!createHold) { // if create hold is false, allow creating items
+    gravity();
     chain = 1; // reset chain
     updateScore()
     const wereItemsAdded = makeTopCells();
@@ -245,7 +247,7 @@ const step = () => {
   }
   setTimeout(() => {
     window.requestAnimationFrame(step);
-  }, 250)
+  }, 50)
 }
 
 window.requestAnimationFrame(step);
