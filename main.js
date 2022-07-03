@@ -168,6 +168,7 @@ const clearColumns = () => {
         cells.forEach(cell => cell.remove());
       }, 200)
       wereItemsRemoved = true;
+      playAudioClearCells();
     }
   }
   return wereItemsRemoved;
@@ -198,6 +199,7 @@ const clearRows = () => {
         cells.forEach(cell => cell.remove());
       }, 200)
       wereItemsRemoved = true;
+      playAudioClearCells();
     }
   }
   return wereItemsRemoved;
