@@ -27,7 +27,8 @@ const updateTimer = () => {
     const newTimeString = `${Math.max(newTime, 0)}`
     timer.textContent = msToSecondsString(newTimeString, 3)
   }
-  if (newTime < 0) {
+  if (Math.floor(newTime) <= 0) {
+    timer.textContent = msToSecondsString(0, 3);
     endGame = true;
   }
 }
