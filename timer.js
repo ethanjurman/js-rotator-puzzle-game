@@ -12,6 +12,7 @@ const makeTimer = () => {
   document.body.appendChild(timerContainer);
   const timer = document.createElement('div');
   timer.setAttribute('class', 'timer');
+  timer.textContent = 'press:space'
   timerContainer.appendChild(timer);
   const bonusTimer = document.createElement('div');
   bonusTimer.setAttribute('class', 'bonusTimer');

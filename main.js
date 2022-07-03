@@ -120,8 +120,9 @@ const getCellItem = (x,y) => {
 }
 
 const rotateCells = () => {
-  const areItemsCurrentlyBeingRemoved = document.querySelector('.remove')
-  if (areItemsCurrentlyBeingRemoved) {
+  const cells = document.querySelectorAll('.cell')
+  const areCellsBeingRemoved = Boolean(document.querySelector('.remove'));
+  if (cells.length !== GRID_HEIGHT_SIZE * GRID_WIDTH_SIZE || areCellsBeingRemoved) {
     return;
   }
   const {x, y}= cursorPos;

@@ -2,6 +2,7 @@ let touchStartX = 0
 let touchEndX = 0
 let touchStartY = 0
 let touchEndY = 0
+const cursor = document.querySelector('.cursor');
     
 function checkDirection() {
   if (endGame) {
@@ -32,32 +33,48 @@ function checkDirection() {
   updateCursor();
 }
 
-document.addEventListener('touchstart', e => {
-  touchStartX = e.changedTouches[0].screenX
-  touchStartY = e.changedTouches[0].screenY
+document.addEventListener('touchstart', evt => {
+  touchStartX = evt.changedTouches[0].clientX;
+  touchStartY = evt.changedTouches[0].clientY;
+  // const cursor = document.querySelector('.cursor');
+  cursor.style = `left: ${touchStartX - 75}px; top: ${touchStartY - 75}px; position: fixed;`
 })
 
-document.addEventListener('touchend', e => {
+document.addEventListener('touchmove', evt => {
+  touchMoveX = evt.changedTouches[0].clientX;
+  touchMoveY = evt.changedTouches[0].clientY;
+  // const cursor = document.querySelector('.cursor');
+  cursor.style = `left: ${touchMoveX - 75}px; top: ${touchMoveY - 75}px; position: fixed;`
+})
+
+document.addEventListener('touchend', evt => {
   if (endGame) {
     return;
   }
-  touchEndX = e.changedTouches[0].screenX
-  touchEndY = e.changedTouches[0].screenY
-  checkDirection()
-})
-
-let clickStatus = false;
-let timeout;
-
-document.addEventListener('click', (ev) => {
-  if (endGame) {
-    return;
-  }
-  if (ev.target.classList.contains('clickPoint')) {
-    cursorPos = {x: Number(ev.target.dataset.clickX), y: Number(ev.target.dataset.clickY)}
+  touchEndX = evt.changedTouches[0].clientX;
+  touchEndY = evt.changedTouches[0].clientY;
+  const targetElement = document.elementFromPoint(touchEndX, touchEndY);
+  if (targetElement.classList.contains('clickPoint')) {
+    cursorPos = {x: Number(targetElement.dataset.clickX), y: Number(targetElement.dataset.clickY)}
     updateCursor();
     rotateCells();
   } else {
     rotateCells();
   }
-});
+})
+
+let clickStatus = false;
+let timeout;
+
+// document.addEventListener('click', (evt) => {
+//   if (endGame) {
+//     return;
+//   }
+//   if (evt.target.classList.contains('clickPoint')) {
+//     cursorPos = {x: Number(evt.target.dataset.clickX), y: Number(evt.target.dataset.clickY)}
+//     updateCursor();
+//     rotateCells();
+//   } else {
+//     rotateCells();
+//   }
+// });
