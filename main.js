@@ -64,7 +64,6 @@ const updateScore = () => {
       score.textContent = i
     }, (i - scoreValue) * 50);
   }
-  console.log('addToTimer(',(newScoreValue - scoreValue) * 500,')')
   addToTimer((newScoreValue - scoreValue) * 500);
   scoreValue = newScoreValue;
 }
@@ -163,7 +162,6 @@ const clearColumns = () => {
     if (color && color !== 'UNREGISTERED') {
       const cells = document.querySelectorAll(`[data-x="${i}"]`);
       const growingScore = newScoreValue - scoreValue;
-      console.log(`newScoreValue = ${scoreValue} + ${growingScore} + (${cells.length} * ${chain});`);
       newScoreValue = scoreValue + growingScore + (cells.length * chain);
       cells.forEach(cell => cell.classList.add('remove'));
       setTimeout(() => {
@@ -194,7 +192,6 @@ const clearRows = () => {
     if (color && color !== 'UNREGISTERED') {
       const cells = document.querySelectorAll(`[data-y="${i}"]`);
       const growingScore = newScoreValue - scoreValue;
-      console.log(`newScoreValue = ${scoreValue} + ${growingScore} + (${cells.length} * ${chain});`);
       newScoreValue = scoreValue + growingScore + (cells.length * chain);
       cells.forEach(cell => cell.classList.add('remove'));
       setTimeout(() => {
