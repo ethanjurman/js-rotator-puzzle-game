@@ -152,7 +152,6 @@ body {
   top: 30px;
   transition: all 0.2s;
   overflow: auto;
-  float: right;
   position: absolute;
 }
 .showBonusTimer {

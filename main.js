@@ -10,6 +10,7 @@ let cursorPos = {x: 0, y: 0};
 let createHold = false;
 let scoreValue = 0;
 let newScoreValue = 0;
+let chain = 1;
 let endGame = false;
 
 const getRandomColor =
@@ -63,6 +64,7 @@ const updateScore = () => {
       score.textContent = i
     }, (i - scoreValue) * 50);
   }
+  console.log('addToTimer(',(newScoreValue - scoreValue) * 500,')')
   addToTimer((newScoreValue - scoreValue) * 500);
   scoreValue = newScoreValue;
 }
@@ -155,7 +157,8 @@ const clearColumns = () => {
     }
     if (color && color !== 'UNREGISTERED') {
       const cells = document.querySelectorAll(`[data-x="${i}"]`);
-      newScoreValue = scoreValue + cells.length;
+      const growingScore = newScoreValue - scoreValue;
+      newScoreValue = scoreValue + growingScore + (cells.length * chain);
       cells.forEach(cell => cell.classList.add('remove'));
       setTimeout(() => {
         cells.forEach(cell => cell.remove());
@@ -184,7 +187,8 @@ const clearRows = () => {
     }
     if (color && color !== 'UNREGISTERED') {
       const cells = document.querySelectorAll(`[data-y="${i}"]`);
-      newScoreValue = scoreValue + cells.length;
+      const growingScore = newScoreValue - scoreValue;
+      newScoreValue = scoreValue + growingScore + (cells.length * chain);
       cells.forEach(cell => cell.classList.add('remove'));
       setTimeout(() => {
         cells.forEach(cell => cell.remove());
@@ -221,24 +225,27 @@ const makeTopCells = () => {
   return wereItemsAdded;
 }
 
-function step() {
+const step = () => {
   gravity();
-  if (createHold) { // if create hold is true, allow clearing items
-    const wereItemsRemoved = clearRows() || clearColumns();
-    if (!wereItemsRemoved) {
+  const areItemsCurrentlyBeingRemoved = document.querySelector('.remove')
+  if (createHold && !areItemsCurrentlyBeingRemoved) { // if create hold is true, allow clearing items
+    const wereItemsRemovedFromColumns = clearColumns() && chain++;
+    const wereItemsRemovedFromRows = clearRows() && chain++;
+    if (!wereItemsRemovedFromColumns && !wereItemsRemovedFromRows) {
       createHold = false;
     }
   }
   if (!createHold) { // if create hold is false, allow creating items
+    chain = 1; // reset chain
+    updateScore()
     const wereItemsAdded = makeTopCells();
     if (!wereItemsAdded) {
       createHold = true;
     }
   }
-  updateScore()
   setTimeout(() => {
     window.requestAnimationFrame(step);
-  }, 100)
+  }, 250)
 }
 
 window.requestAnimationFrame(step);
