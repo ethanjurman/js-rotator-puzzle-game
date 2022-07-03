@@ -1,5 +1,5 @@
 const audioMoveElement = document.querySelector('#audio-move');
-audioMoveElement.volume = 0.15;
+audioMoveElement.volume = 0.1;
 const audioRotateElement = document.querySelector('#audio-rotate');
 audioRotateElement.volume = 0.3;
 const audioClearCellsElement = document.querySelector('#audio-clear-cells');
@@ -37,19 +37,4 @@ document.addEventListener('keydown', (ev) => {
   }
 });
 
-
-document.addEventListener('keydown', (ev) => {
-  if (endGame) {
-    return;
-  }
-  // * copied from cellRotate method
-  const cells = document.querySelectorAll('.cell')
-  const areCellsBeingRemoved = Boolean(document.querySelector('.remove'));
-  if (cells.length !== GRID_HEIGHT_SIZE * GRID_WIDTH_SIZE || areCellsBeingRemoved) {
-    return;
-  }
-  // *
-  if (ev.key === ' ') {
-    playAudioRotate();
-  }
-});
+rotateCells.afterArray.push(playAudioRotate);

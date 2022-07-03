@@ -137,11 +137,15 @@ const rotateCells = () => {
     cellElement.style = `left: ${CELL_WIDTH * newX}px; top: ${CELL_HEIGHT * newY}px;`
   });
 
+  rotateCells.afterArray.forEach((func) => func())
+
   // if this is the first rotate, let's start the timer;
   if (startTime === -1) {
     startTimer();
   }
 }
+
+rotateCells.afterArray = [];
 
 const clearColumns = () => {
   let wereItemsRemoved = false;
