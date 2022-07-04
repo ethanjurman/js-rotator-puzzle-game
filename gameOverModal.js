@@ -33,7 +33,7 @@ const closeGameOverModal = () => {
   startTime = -1;
   newScoreValue = 0;
   scoreValue = 0;
-  timerMS = 4000; // reset this timer at the start of the game
+  timerMS = 60000; // reset this timer at the start of the game
   const scoreEle = document.querySelector('.score');
   scoreEle.textContent = '0'
   const timerEle = document.querySelector('.timerContainer');
