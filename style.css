@@ -222,7 +222,7 @@ body {
   bottom: 30px;
   background: rgb(57 47 90);
   margin: 0 auto;
-  width: 550px;
+  max-width: 550px;
   border-radius: 40px;
   color: white;
   padding: 40px;
@@ -263,7 +263,8 @@ body {
   border-color: rgba(0,0,0,0) !important;
 }
 .title-block-appear {
-  width: 30px;
+  width: calc(100% / 24);
+  height: calc(100% / 24);
   transform: scale(1, 1) rotate(0deg);
 }
 .start-button {

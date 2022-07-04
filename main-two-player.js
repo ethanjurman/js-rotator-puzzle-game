@@ -51,6 +51,7 @@ const makePlayer = (playerId) => {
   const makeScore = () => {
     const score = document.createElement('div');
     score.setAttribute('class', 'score');
+    score.classList.add(`playerId-${playerId}`)
     score.textContent = 0;
     return score;
   }
@@ -59,13 +60,13 @@ const makePlayer = (playerId) => {
     if (scoreValue === newScoreValue) {
       return;
     }
-    const score = document.querySelector('.score');
+    const score = document.querySelector(`.playerId-${playerId}.score`);
     for (let i = scoreValue; i < newScoreValue + 1; i++) {
       setTimeout(() => {
         score.textContent = i
       }, (i - scoreValue) * 50);
     }
-    playerId
+    playerId === 1
       ? addToTimerPlayer1((newScoreValue - scoreValue) * 500)
       : addToTimerPlayer2((newScoreValue - scoreValue) * 500);
     scoreValue = newScoreValue;
@@ -145,7 +146,7 @@ const makePlayer = (playerId) => {
 
     // if this is the first rotate, let's start the timer;
     if (startTime === -1) {
-      playerId ? startTimerPlayer1() : startTimerPlayer2();
+      playerId === 1 ? startTimerPlayer1() : startTimerPlayer2();
     }
   }
 
