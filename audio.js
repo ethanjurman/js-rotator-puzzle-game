@@ -36,5 +36,3 @@ document.addEventListener('keydown', (ev) => {
     playAudioMove();
   }
 });
-
-rotateCells.afterArray.push(playAudioRotate);

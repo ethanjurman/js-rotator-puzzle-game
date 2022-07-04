@@ -34,6 +34,18 @@ body {
   box-shadow: 0px 8px 12px black;
 }
 
+.grid.player-1 {
+  position: fixed;
+  margin: 30px;
+  left: 30px;
+}
+
+.grid.player-2 {
+  position: fixed;
+  margin: 30px;
+  right: 30px;
+}
+
 .cell {
   display:inline-block;
   width: var(--cell-height);
@@ -138,9 +150,19 @@ body {
   left: calc(50% - 200px);
   top: -12px;
 }
+.timerContainer.player-1 {
+  left: 90px;
+}
+.timerContainer.player-2 {
+  left: initial;
+  right: 90px;
+}
 
 .timerStopped {
   color: #ff4b33;
+}
+.timerEnded {
+  color: #73C05D;
 }
 
 .bonusTimer {
