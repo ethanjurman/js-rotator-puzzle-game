@@ -66,21 +66,29 @@ body {
 .color1 {
   background-color: #FF9933;
   border: 2px solid #FF9933;
+  /* background-image: url('./pumpkin-icon.png'); */
+  background-size: 50px;
 }
 
 .color2 {
   background-color: #F4D06F;
   border: 2px solid #F4D06F;
+  /* background-image: url('./moon-icon.png'); */
+  background-size: 50px;
 }
 
 .color3 {
   background-color: #C091CA;
   border: 2px solid #C091CA;
+  /* background-image: url('./bat-icon.png'); */
+  background-size: 50px;
 }
 
 .color4 {
   background-color: #5DC0B5;
   border: 2px solid #5DC0B5;
+  /* background-image: url('./ghost-icon.png'); */
+  background-size: 50px;
 }
 
 .cursor {
@@ -180,8 +188,7 @@ body {
   top: 10px;
 }
 
-.clickPoint {    
-  cursor: pointer;
+.clickPoint {
   position: absolute;
   width: 80px;
   height: 80px;
