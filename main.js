@@ -1,12 +1,12 @@
 const COLORS = ['color1', 'color2', 'color3', 'color4'];
 const GRID_HEIGHT_SIZE = Number(getComputedStyle(document.documentElement)
-    .getPropertyValue('--cells-high')) || 6;
+  .getPropertyValue('--cells-high')) || 6;
 const GRID_WIDTH_SIZE = Number(getComputedStyle(document.documentElement)
-    .getPropertyValue('--cells-wide')) || 6;
+  .getPropertyValue('--cells-wide')) || 6;
 const CELL_HEIGHT = (400 / GRID_HEIGHT_SIZE) + 4;
 const CELL_WIDTH = (400 / GRID_WIDTH_SIZE) + 4;
 
-let cursorPos = {x: 0, y: 0};
+let cursorPos = { x: 0, y: 0 };
 let createHold = false;
 let scoreValue = 0;
 let newScoreValue = 0;
@@ -18,15 +18,15 @@ const getRandomColor = () => {
 }
 
 const makeCell = (x, y) => {
-    const cell = document.createElement('div');
-    const color = getRandomColor();
-    cell.setAttribute('class', `cell ${color}`);
-    cell.style = `left: ${CELL_WIDTH * x}px; top: ${CELL_HEIGHT * y}px;`
-    cell.dataset.x = x;
-    cell.dataset.y = y;
-    cell.dataset.color = color;
-    return cell;
-} 
+  const cell = document.createElement('div');
+  const color = getRandomColor();
+  cell.setAttribute('class', `cell ${color}`);
+  cell.style = `left: ${CELL_WIDTH * x}px; top: ${CELL_HEIGHT * y}px;`
+  cell.dataset.x = x;
+  cell.dataset.y = y;
+  cell.dataset.color = color;
+  return cell;
+}
 
 const makeClickPoint = (x, y) => {
   if (x >= GRID_HEIGHT_SIZE - 1 || y >= GRID_WIDTH_SIZE - 1) {
@@ -38,7 +38,7 @@ const makeClickPoint = (x, y) => {
   clickPoint.dataset.clickX = x;
   clickPoint.dataset.clickY = y;
   return clickPoint;
-} 
+}
 
 const makeCursor = () => {
   const cursor = document.createElement('div');
@@ -71,14 +71,14 @@ const makeGrid = () => {
   const grid = document.createElement('div');
   grid.setAttribute('class', 'grid');
   document.body.appendChild(grid);
-  
+
   for (let i = 0; i < GRID_WIDTH_SIZE; i++) {
     for (let j = 0; j < GRID_HEIGHT_SIZE; j++) {
       grid.appendChild(makeClickPoint(i, j));
       grid.appendChild(makeCell(i, j))
     }
   }
-  
+
   grid.appendChild(makeCursor());
   grid.appendChild(makeScore())
 }
@@ -90,16 +90,16 @@ document.onkeydown = (ev) => {
     return;
   }
   if (ev.key === 'w' || ev.key === 'ArrowUp') {
-    cursorPos = {x: cursorPos.x, y: cursorPos.y ? cursorPos.y - 1 : GRID_HEIGHT_SIZE - 2}
+    cursorPos = { x: cursorPos.x, y: cursorPos.y ? cursorPos.y - 1 : GRID_HEIGHT_SIZE - 2 }
   }
   if (ev.key === 'a' || ev.key === 'ArrowLeft') {
-    cursorPos = {x: cursorPos.x ? cursorPos.x - 1 : GRID_WIDTH_SIZE - 2, y: cursorPos.y}
+    cursorPos = { x: cursorPos.x ? cursorPos.x - 1 : GRID_WIDTH_SIZE - 2, y: cursorPos.y }
   }
   if (ev.key === 's' || ev.key === 'ArrowDown') {
-    cursorPos = {x: cursorPos.x, y: (cursorPos.y + 1) % (GRID_HEIGHT_SIZE - 1)}
+    cursorPos = { x: cursorPos.x, y: (cursorPos.y + 1) % (GRID_HEIGHT_SIZE - 1) }
   }
   if (ev.key === 'd' || ev.key === 'ArrowRight') {
-    cursorPos = {x: (cursorPos.x + 1) % (GRID_WIDTH_SIZE - 1), y: cursorPos.y}
+    cursorPos = { x: (cursorPos.x + 1) % (GRID_WIDTH_SIZE - 1), y: cursorPos.y }
   }
   if (ev.key === ' ') {
     rotateCells();
@@ -109,11 +109,11 @@ document.onkeydown = (ev) => {
 
 const updateCursor = () => {
   const cursor = document.querySelector('.cursor');
-  const {x, y} = cursorPos;
+  const { x, y } = cursorPos;
   cursor.style = `left: ${CELL_WIDTH * x}px; top: ${CELL_HEIGHT * y}px;`
 }
 
-const getCellItem = (x,y) => {
+const getCellItem = (x, y) => {
   return document.querySelector(`[data-x="${x}"][data-y="${y}"]`)
 }
 
@@ -123,9 +123,9 @@ const rotateCells = () => {
   if (cells.length !== GRID_HEIGHT_SIZE * GRID_WIDTH_SIZE || areCellsBeingRemoved) {
     return;
   }
-  const {x, y}= cursorPos;
+  const { x, y } = cursorPos;
   const cellsToRotate = [[x, y], [x + 1, y], [x + 1, y + 1], [x, y + 1]];
-  const cellElements = cellsToRotate.map((pair) => getCellItem(pair[0],pair[1]));
+  const cellElements = cellsToRotate.map((pair) => getCellItem(pair[0], pair[1]));
   cellElements.forEach((cellElement, index) => {
     if (!cellElement) {
       return false;
@@ -209,7 +209,7 @@ const clearRows = () => {
 const gravity = () => {
   const cellElements = document.querySelectorAll('.cell')
   for (cellElement of cellElements) {
-    const {x, y} = cellElement.dataset;
+    const { x, y } = cellElement.dataset;
     if (Number(y) === GRID_HEIGHT_SIZE - 1) {
       continue;
     }

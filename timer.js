@@ -56,7 +56,7 @@ function stepTimer() {
   if (startTime !== -1) {
     updateTimer();
   }
-  
+
   setTimeout(() => {
     stepTimer();
   }, 10)

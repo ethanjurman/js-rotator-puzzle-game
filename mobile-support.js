@@ -3,7 +3,7 @@ let touchEndX = 0
 let touchStartY = 0
 let touchEndY = 0
 const cursor = document.querySelector('.cursor');
-    
+
 function checkDirection() {
   if (endGame) {
     return;
@@ -13,21 +13,21 @@ function checkDirection() {
   if (xDiff > yDiff && xDiff > 20) {
     if (touchEndX < touchStartX) {
       // SWIPED LEFT
-      cursorPos = {x: Math.max(cursorPos.x - 1, 0), y: cursorPos.y}
+      cursorPos = { x: Math.max(cursorPos.x - 1, 0), y: cursorPos.y }
     }
     if (touchEndX > touchStartX) {
       // SWIPED RIGHT
-      cursorPos = {x: Math.min(cursorPos.x + 1, GRID_WIDTH_SIZE - 2), y: cursorPos.y}
+      cursorPos = { x: Math.min(cursorPos.x + 1, GRID_WIDTH_SIZE - 2), y: cursorPos.y }
     }
   }
   if (xDiff < yDiff && yDiff > 20) {
     if (touchEndY < touchStartY) {
       // SWIPED UP
-      cursorPos = {x: cursorPos.x, y: Math.max(cursorPos.y - 1, 0)}
+      cursorPos = { x: cursorPos.x, y: Math.max(cursorPos.y - 1, 0) }
     }
     if (touchEndY > touchStartY) {
       // SWIPED DOWN
-      cursorPos = {x: cursorPos.x, y: Math.min(cursorPos.y + 1, GRID_HEIGHT_SIZE - 2)}
+      cursorPos = { x: cursorPos.x, y: Math.min(cursorPos.y + 1, GRID_HEIGHT_SIZE - 2) }
     }
   }
   updateCursor();
@@ -55,10 +55,8 @@ document.addEventListener('touchend', evt => {
   touchEndY = evt.changedTouches[0].clientY;
   const targetElement = document.elementFromPoint(touchEndX, touchEndY);
   if (targetElement.classList.contains('clickPoint')) {
-    cursorPos = {x: Number(targetElement.dataset.clickX), y: Number(targetElement.dataset.clickY)}
+    cursorPos = { x: Number(targetElement.dataset.clickX), y: Number(targetElement.dataset.clickY) }
     updateCursor();
-    rotateCells();
-  } else {
     rotateCells();
   }
 })

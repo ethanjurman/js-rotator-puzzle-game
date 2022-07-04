@@ -1,3 +1,20 @@
+@font-face {
+    font-family: "CourierPrime-Regular";
+    src: url("./Courier_Prime/CourierPrime-Regular.ttf");
+}
+@font-face {
+    font-family: "CourierPrime-Bold";
+    src: url("./Courier_Prime/CourierPrime-Bold.ttf");
+}
+@font-face {
+    font-family: "CourierPrime-BoldItalic";
+    src: url("./Courier_Prime/CourierPrime-BoldItalic.ttf");
+}
+
+* {
+  font-family: "CourierPrime-Regular";
+}
+
 /* remove blue highlight */
 input,
 textarea,
@@ -195,4 +212,67 @@ body {
   z-index: 9;
   border-radius: 20px;
   transform: translate(-38px, -38px);
+}
+
+.modal {
+  position: fixed;
+  left: 10px;
+  top: 10px;
+  right: 10px;
+  bottom: 30px;
+  background: rgb(57 47 90);
+  margin: 0 auto;
+  width: 550px;
+  border-radius: 40px;
+  color: white;
+  padding: 40px;
+  text-align: center;
+  z-index: 9;
+  transition: all 0.5s;
+  transform: translateY(0);
+  box-shadow: 0px 0px 100px black, 0px 0px 100px black, 0px 0px 100px black, 0px 0px 100px black;
+}
+.content {
+  height: calc(100% - 120px);
+  overflow: auto;
+  margin: 10px;
+  margin-bottom: 20px;
+}
+.content > img {
+  width: 100%;
+  margin-top: 10px;
+}
+.remove-modal {
+  transform: translateY(200%);
+}
+.title-block {
+  font-size: 30px;
+  font-family: "CourierPrime-BoldItalic";
+  width: 0px;
+  height: 30px;
+  padding: 4px;
+  border-radius: 6px;
+  display: inline-block;
+  transform: scale(0, 0) rotate(-360deg);
+  transition: all 0.5s;
+  color: black;
+  font-weight: 700;
+}
+.title-block.spacer {
+  background-color: rgba(0,0,0,0) !important;
+  border-color: rgba(0,0,0,0) !important;
+}
+.title-block-appear {
+  width: 30px;
+  transform: scale(1, 1) rotate(0deg);
+}
+.start-button {
+    display: inline-block;
+    background: #F4D06F;
+    color: black;
+    font-family: 'CourierPrime-BoldItalic';
+    font-weight: 700;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 12px;
 }

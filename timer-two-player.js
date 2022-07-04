@@ -23,7 +23,7 @@ const playerTimer = (playerId) => {
     bonusTimer.classList.add(`player-${playerId}`);
     timerContainer.appendChild(bonusTimer);
   }
-  
+
   const updateTimer = () => {
     const currentTime = new Date().getTime();
     const timer = document.querySelector(`.player-${playerId} > .timer`);
@@ -38,11 +38,11 @@ const playerTimer = (playerId) => {
       endGame = true;
     }
   }
-  
+
   const startTimer = () => {
     startTime = new Date().getTime();
   }
-  
+
   const addToTimer = (timeToAdd) => {
     const bonusTimer = document.querySelector(`.player-${playerId} > .bonusTimer`);
     bonusTimer.textContent = `+${msToSecondsString(timeToAdd, 0)}`;
@@ -75,8 +75,8 @@ const playerTimer = (playerId) => {
   makeTimer();
   stepTimer();
 
-  return {startTimer, addToTimer};
+  return { startTimer, addToTimer };
 }
 
-const {startTimer: startTimerPlayer1, addToTimer: addToTimerPlayer1} = playerTimer(1);
-const {startTimer: startTimerPlayer2, addToTimer: addToTimerPlayer2} = playerTimer(2);
+const { startTimer: startTimerPlayer1, addToTimer: addToTimerPlayer1 } = playerTimer(1);
+const { startTimer: startTimerPlayer2, addToTimer: addToTimerPlayer2 } = playerTimer(2);
