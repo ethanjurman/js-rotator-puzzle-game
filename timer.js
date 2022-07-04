@@ -1,5 +1,5 @@
 let startTime = -1;
-let timerMS = 60000;
+let timerMS = 4000;
 
 const msToSecondsString = (ms, padding) => {
   ms = `${ms}`

@@ -229,7 +229,7 @@ body {
   text-align: center;
   z-index: 9;
   transition: all 0.5s;
-  transform: translateY(0);
+  transform: translateY(0%);
   box-shadow: 0px 0px 100px black, 0px 0px 100px black, 0px 0px 100px black, 0px 0px 100px black;
 }
 .content {
@@ -237,13 +237,29 @@ body {
   overflow: auto;
   margin: 10px;
   margin-bottom: 20px;
+  box-shadow: inset 0px -14px 16px -18px black;
+
+  /* hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
 }
+/* Hide scrollbar for Chrome, Safari and Opera */
+.content::-webkit-scrollbar {
+  display: none;
+}
+
 .content > img {
   width: 100%;
   margin-top: 10px;
 }
+.show-modal {
+  transform: translateY(-200%);
+}
 .remove-modal {
   transform: translateY(200%);
+}
+.title {
+  height: 60px;
 }
 .title-block {
   font-size: 30px;
@@ -264,8 +280,30 @@ body {
 }
 .title-block-appear {
   width: calc(100% / 24);
-  height: calc(100% / 24);
   transform: scale(1, 1) rotate(0deg);
+}
+@keyframes startButtonAnim {
+  0% {
+    transform: rotate(0deg);
+  }
+  70% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+  80% {
+    transform: rotate(-5deg);
+  }
+  85% {
+    transform: rotate(5deg);
+  }
+  90% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
 .start-button {
     display: inline-block;
@@ -276,4 +314,6 @@ body {
     padding: 8px;
     cursor: pointer;
     border-radius: 12px;
+    animation: startButtonAnim 2s infinite;
+    animation-delay: 10s;
 }

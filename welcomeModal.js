@@ -13,7 +13,7 @@ const welcomeModal = `
     <span class="title-block">O</span>
     <span class="title-block">R</span>
     </div>
-    <div class="content">
+    <div class="content" onscroll="scrollModal()">
       <p>JS ROTATOR is a fully vanilla JavaScript game inspired by games like Yoshis Cookie & Tetris.</p>
       <p>Move the cursor by pushing WASD or UP, DOWN, LEFT or RIGHT on the keyboard. Rotate a section of 4 blocks by pushing space.</p>
       <img src="./gifs/rotate.gif">
@@ -38,7 +38,7 @@ const showTitle = () => {
     setTimeout(() => {
       block.classList.add(COLORS[Math.floor(Math.random() * 4)])
       block.classList.add('title-block-appear')
-    }, 200 * index)
+    }, 50 * index)
   })
 }
 
@@ -48,6 +48,11 @@ const closeWelcomeModal = () => {
   setTimeout(() => {
     modal.remove();
   }, 500)
+}
+
+const scrollModal = () => {
+  const content = document.querySelector('.content');
+  content.style = `box-shadow: inset 0px -14px 16px -18px black, inset 0px ${Math.min(content.scrollTop, 14)}px 16px -18px black;`
 }
 
 createWelcomeModal();
