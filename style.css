@@ -305,7 +305,7 @@ body {
     transform: rotate(0deg);
   }
 }
-.start-button {
+.start-button, .endless-button {
     display: inline-block;
     background: #F4D06F;
     color: black;

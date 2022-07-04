@@ -11,8 +11,9 @@ const gameOverModal = () => `
     <span class="title-block">E</span>
     <span class="title-block">R</span>
     </div>
-    <div style="margin-bottom: 50px">Total Score: ${scoreValue}</div>
-    <div class="start-button" onclick="closeGameOverModal()">Click Here to Start Again!</div>
+    <div style="margin: 50px">Total Score: ${scoreValue}</div>
+    <div class="start-button" onclick="startOver()">Click Here to Start Again!</div>
+    <div style="margin-top: 20px" class="endless-button" onclick="startEndless()">Click Here to Continue Endless.</div>
   </div>
 `
 
@@ -25,7 +26,7 @@ const createGameOverModal = () => {
   showTitle();
 }
 
-const closeGameOverModal = () => {
+const startOver = () => {
   const modal = document.querySelector('.modal');
   modal.classList.add('remove-modal');
   // reset game states
@@ -41,6 +42,23 @@ const closeGameOverModal = () => {
 
   makeTimer();
   stepTimer();
+  startGameOverCheck();
+
+  setTimeout(() => {
+    modal.remove();
+  }, 500)
+}
+
+const startEndless = () => {
+  const modal = document.querySelector('.modal');
+  modal.classList.add('remove-modal');
+  // reset game states
+  endGame = false;
+  startTime = -1;
+  const scoreEle = document.querySelector('.score');
+  scoreEle.textContent = '0'
+  const timerEle = document.querySelector('.timerContainer');
+  timerEle.remove();
   startGameOverCheck();
 
   setTimeout(() => {

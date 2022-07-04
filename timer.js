@@ -39,6 +39,9 @@ const startTimer = () => {
 
 const addToTimer = (timeToAdd) => {
   const bonusTimer = document.querySelector('.bonusTimer');
+  if (!bonusTimer) {
+    return;
+  }
   bonusTimer.textContent = `+${msToSecondsString(timeToAdd, 0)}`;
   bonusTimer.classList.add('showBonusTimer');
   setTimeout(() => {
