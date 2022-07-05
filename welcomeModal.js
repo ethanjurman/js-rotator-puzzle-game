@@ -16,11 +16,12 @@ const welcomeModal = `
     <div class="content" onscroll="scrollModal()">
       <p>JS ROTATOR is a fully vanilla JavaScript game inspired by games like Yoshi's Cookie & Tetris.<br/>Made by Ethan Jurman.</p>
       <p>Move the cursor by pushing WASD or UP, DOWN, LEFT or RIGHT on the keyboard. Rotate a section of 4 blocks by pushing space.</p>
+      <p>On mobile & touch devices, tap on the screen inbetween the four blocks you want to rotate.</p>
       <img src="./gifs/rotate.gif">
       <p>Match an entire row or column of blocks with the same color to get points.</p>
       <img src="./gifs/row-clear.gif">
       <img src="./gifs/column-clear.gif">
-      <p>Get a high score before the time runs out!</p>
+      <p>Get a high score before the time runs out! Time starts after you rotate your first piece.</p>
       <img src="./gifs/combo.gif">
     </div>
     <div class="start-button" onclick="closeWelcomeModal()">Click Here to Start!</div>
@@ -52,7 +53,9 @@ const closeWelcomeModal = () => {
 
 const scrollModal = () => {
   const content = document.querySelector('.content');
-  content.style = `box-shadow: inset 0px -14px 16px -18px black, inset 0px ${Math.min(content.scrollTop, 14)}px 16px -18px black;`
+  const bottomShadow = Math.max(content.scrollTop - (content.scrollHeight - content.clientHeight), -14);
+  const topShadow = Math.min(content.scrollTop, 14);
+  content.style = `box-shadow: inset 0px ${bottomShadow}px 16px -18px black, inset 0px ${topShadow}px 16px -18px black;`
 }
 
 createWelcomeModal();
