@@ -101,7 +101,7 @@ document.onkeydown = (ev) => {
   if (ev.key === 'd' || ev.key === 'ArrowRight') {
     cursorPos = { x: (cursorPos.x + 1) % (GRID_WIDTH_SIZE - 1), y: cursorPos.y }
   }
-  if (ev.key === ' ') {
+  if (ev.key === ' ' || ev.key === 'z') {
     rotateCells();
   }
   updateCursor();
