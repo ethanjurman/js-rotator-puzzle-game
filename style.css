@@ -10,6 +10,11 @@
     font-family: "CourierPrime-BoldItalic";
     src: url("./Courier_Prime/CourierPrime-BoldItalic.ttf");
 }
+@media (prefers-reduced-motion) {
+  * {
+    transition: all 0s !important;
+  }
+}
 
 * {
   font-family: "CourierPrime-Regular";
@@ -290,30 +295,33 @@ body {
     transform: rotate(0deg);
   }
   75% {
-    transform: rotate(5deg);
+    transform: rotate(3deg);
   }
   80% {
-    transform: rotate(-5deg);
+    transform: rotate(-3deg);
   }
   85% {
-    transform: rotate(5deg);
+    transform: rotate(3deg);
   }
   90% {
-    transform: rotate(-5deg);
+    transform: rotate(-3deg);
   }
   100% {
     transform: rotate(0deg);
   }
 }
 .start-button, .endless-button {
-    display: inline-block;
-    background: #F4D06F;
-    color: black;
-    font-family: 'CourierPrime-BoldItalic';
-    font-weight: 700;
-    padding: 8px;
-    cursor: pointer;
-    border-radius: 12px;
-    animation: startButtonAnim 2s infinite;
-    animation-delay: 10s;
+  display: inline-block;
+  background: #F4D06F;
+  color: black;
+  font-family: 'CourierPrime-BoldItalic';
+  font-weight: 700;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 12px;
+  animation: startButtonAnim 2s infinite;
+  animation-delay: 10s;
+}
+.endless-button {
+  animation-delay: 9s;
 }
