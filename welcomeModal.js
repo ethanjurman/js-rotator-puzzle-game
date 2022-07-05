@@ -14,7 +14,7 @@ const welcomeModal = `
     <span class="title-block">R</span>
     </div>
     <div class="content" onscroll="scrollModal()">
-      <p>JS ROTATOR is a fully vanilla JavaScript game inspired by games like Yoshis Cookie & Tetris.</p>
+      <p>JS ROTATOR is a fully vanilla JavaScript game inspired by games like Yoshi's Cookie & Tetris.<br/>Made by Ethan Jurman.</p>
       <p>Move the cursor by pushing WASD or UP, DOWN, LEFT or RIGHT on the keyboard. Rotate a section of 4 blocks by pushing space.</p>
       <img src="./gifs/rotate.gif">
       <p>Match an entire row or column of blocks with the same color to get points.</p>
