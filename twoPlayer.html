@@ -5,10 +5,10 @@
     <meta property="og:description" content="The Rotating Puzzle Game by Ethan Jurman" />
     <meta property="og:image" content="https://ethanjurman.github.io/js-rotator-puzzle-game/banner.png" />
     <meta property="og:url" content="https://ethanjurman.github.io/js-rotator-puzzle-game/twoPlayer" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+    <link rel="manifest" href="./site.webmanifest">
   </head>
   <link rel="stylesheet" href="style.css" type="text/css">
   <audio id="audio-move" src="mixkit-on-or-off-light-switch-tap-2585.wav"></audio>
@@ -18,5 +18,11 @@
   <script src="timer-two-player.js" defer></script>
   <script src="audio.js" defer></script>
   <script src="welcomeModal.js" defer></script>
-  <body autofocus></body>
+  <script src="gameOverTwoPlayerModal.js" defer></script>
+  <body autofocus>
+    <div class="gameField">
+      <div class="player-1-space"></div>
+      <div class="player-2-space"></div>
+    </div>
+  </body>
 </html>

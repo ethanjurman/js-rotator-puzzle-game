@@ -76,7 +76,8 @@ const makePlayer = (playerId) => {
     const grid = document.createElement('div');
     grid.classList.add('grid');
     grid.classList.add(`player-${playerId}`);
-    document.body.appendChild(grid);
+    const playField = document.querySelector(`.player-${playerId}-space`);
+    playField.appendChild(grid);
 
     for (let i = 0; i < GRID_WIDTH_SIZE; i++) {
       for (let j = 0; j < GRID_HEIGHT_SIZE; j++) {

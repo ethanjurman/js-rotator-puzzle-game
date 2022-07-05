@@ -13,10 +13,22 @@ const welcomeModal = `
     <span class="title-block">O</span>
     <span class="title-block">R</span>
     </div>
+    ${window.location.href.includes('twoPlayer') ?
+    `<div class="title">
+      <span class="title-block">V</span>
+      <span class="title-block">E</span>
+      <span class="title-block">R</span>
+      <span class="title-block">S</span>
+      <span class="title-block">U</span>
+      <span class="title-block">S</span>
+    </div>` : ''
+  }
     <div class="content" onscroll="scrollModal()">
-      <p>JS ROTATOR is a fully vanilla JavaScript game inspired by games like Yoshi's Cookie & Tetris.<br/>Made by Ethan Jurman.</p>
-      <p>Move the cursor by pushing WASD or UP, DOWN, LEFT or RIGHT on the keyboard. Rotate a section of 4 blocks by pushing space.</p>
-      <p>On mobile & touch devices, tap on the screen inbetween the four blocks you want to rotate.</p>
+      <p><b>JS ROTATOR</b> is a fully vanilla JavaScript game inspired by games like Yoshi's Cookie & Tetris.<br/>Made by Ethan Jurman.</p>
+      ${window.location.href.includes('twoPlayer')
+    ? `<p>Move the cursor by pushing <span style="color:F4D06F">WASD</span> (for player 1)<br /> and <span style="color:F4D06F">UP, DOWN, LEFT and RIGHT</span> (for player 2).<br />Rotate a section of 4 blocks by pushing <span style="color:F4D06F">space</span> (for player 1) and <span style="color:F4D06F">Z</span> (for player 2).</p>`
+    : `<p>Move the cursor by pushing <span style="color:F4D06F">WASD</span> or <span style="color:F4D06F">UP, DOWN, LEFT and RIGHT</span> on the keyboard.<br />Rotate a section of 4 blocks by pushing <span style="color:F4D06F">space<span> or <span style="color:F4D06F">Z</span>.</p>`}
+      ${window.location.href.includes('twoPlayer') ? '' : `<p>On mobile & touch devices, <span style="color:F4D06F">tap on the screen</span> inbetween the four blocks you want to rotate.</p>`}
       <img src="./gifs/rotate.gif">
       <p>Match an entire row or column of blocks with the same color to get points.</p>
       <img src="./gifs/row-clear.gif">
@@ -25,6 +37,11 @@ const welcomeModal = `
       <img src="./gifs/combo.gif">
     </div>
     <div class="start-button" onclick="closeWelcomeModal()">Click Here to Start!</div>
+    ${window.location.href.includes('twoPlayer')
+    ? `<a href="./index.html"><div class="start-button">Go to Single Player</div></a>`
+    : `<a href="./twoPlayer.html"><div class="start-button">Go to Two Player</div></a>`
+  }
+
   </div>
 `
 
@@ -58,5 +75,7 @@ const scrollModal = () => {
   content.style = `box-shadow: inset 0px ${bottomShadow}px 16px -18px black, inset 0px ${topShadow}px 16px -18px black;`
 }
 
-createWelcomeModal();
-showTitle();
+if (!window.location.search.includes('welcomeModal=false')) {
+  createWelcomeModal();
+  showTitle();
+}

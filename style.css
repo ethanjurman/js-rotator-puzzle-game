@@ -56,16 +56,25 @@ body {
   box-shadow: 0px 8px 12px black;
 }
 
+.gameField {
+  margin: 0px auto;
+  display: flex;
+  justify-content: center;
+}
+
+.player-1-space, .player-2-space {
+  display: flex;
+  justify-content: center;
+}
+
 .grid.player-1 {
-  position: fixed;
-  margin: 30px;
-  left: 30px;
+  display: inline-block;
+  margin: 30px 30px 0px 0px;
 }
 
 .grid.player-2 {
-  position: fixed;
-  margin: 30px;
-  right: 30px;
+  display: inline-block;
+  margin: 30px 0px 0px 0px;
 }
 
 .cell {
@@ -180,22 +189,20 @@ body {
   left: calc(50% - 200px);
   top: -12px;
 }
-.timerContainer.player-1 {
-  left: 90px;
+.timerContainer.player-1, .timerContainer.player-2 {
+  left: inherit;
 }
-.timerContainer.player-2 {
-  left: initial;
-  right: 90px;
-}
-
 .timerStopped {
   color: #ff4b33;
 }
 .timerEnded {
   color: #73C05D;
 }
+.player-1 > .timer, .player-2 > .timer {
+  padding-top: 10px;
+}
 
-.bonusTimer {
+.bonusTimer, .damageTimer {
   color: #73C05D;
   display: inline-block;
   right: 25px;
@@ -205,9 +212,12 @@ body {
   overflow: auto;
   position: absolute;
 }
-.showBonusTimer {
+.showBonusTimer, .showDamageTimer {
   opacity: 1;
   top: 10px;
+}
+.damageTimer {
+  color: #c05d5d;
 }
 
 .clickPoint {
@@ -238,7 +248,7 @@ body {
   box-shadow: 0px 0px 100px black, 0px 0px 100px black, 0px 0px 100px black, 0px 0px 100px black;
 }
 .content {
-  height: calc(100% - 120px);
+  height: calc(100% - 200px);
   overflow: auto;
   margin: 10px;
   margin-bottom: 20px;
@@ -321,7 +331,13 @@ body {
   border-radius: 12px;
   animation: startButtonAnim 2s infinite;
   animation-delay: 10s;
+  margin-bottom: 30px;
 }
 .endless-button {
   animation-delay: 9s;
+}
+.scores {
+  font-size: 60px;
+  font-weight: bold;
+  margin-bottom: 30px;
 }

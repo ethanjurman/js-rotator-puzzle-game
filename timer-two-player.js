@@ -1,6 +1,10 @@
 let startTime = -1;
 let player1TimerMS = 120000;
 let player2TimerMS = 120000;
+let startTimerPlayer1;
+let startTimerPlayer2;
+let addToTimerPlayer1;
+let addToTimerPlayer2;
 
 const msToSecondsString = (ms, padding) => {
   ms = `${ms}`
@@ -12,7 +16,8 @@ const playerTimer = (playerId) => {
     const timerContainer = document.createElement('div');
     timerContainer.classList.add('timerContainer');
     timerContainer.classList.add(`player-${playerId}`);
-    document.body.appendChild(timerContainer);
+    const playField = document.querySelector(`.player-${playerId}-space`);
+    playField.appendChild(timerContainer);
     const timer = document.createElement('div');
     timer.classList.add('timer');
     timer.classList.add(`player-${playerId}`);
@@ -22,6 +27,10 @@ const playerTimer = (playerId) => {
     bonusTimer.classList.add('bonusTimer');
     bonusTimer.classList.add(`player-${playerId}`);
     timerContainer.appendChild(bonusTimer);
+    const damageTimer = document.createElement('div');
+    damageTimer.classList.add('damageTimer');
+    damageTimer.classList.add(`player-${playerId}`);
+    timerContainer.appendChild(damageTimer);
   }
 
   const updateTimer = () => {
@@ -50,9 +59,14 @@ const playerTimer = (playerId) => {
     setTimeout(() => {
       bonusTimer.classList.remove('showBonusTimer');
     }, 1000);
+    const damageTimer = document.querySelector(`.player-${playerId === 1 ? 2 : 1} > .damageTimer`);
+    damageTimer.textContent = `-${msToSecondsString(timeToAdd, 0)}`;
+    damageTimer.classList.add('showDamageTimer');
+    setTimeout(() => {
+      damageTimer.classList.remove('showDamageTimer');
+    }, 1000);
     player1TimerMS += playerId === 1 ? timeToAdd : -timeToAdd;
     player2TimerMS += playerId === 2 ? timeToAdd : -timeToAdd;
-    console.log('added time to timer', player1TimerMS, player2TimerMS);
   }
 
   function stepTimer() {
@@ -78,5 +92,9 @@ const playerTimer = (playerId) => {
   return { startTimer, addToTimer };
 }
 
-const { startTimer: startTimerPlayer1, addToTimer: addToTimerPlayer1 } = playerTimer(1);
-const { startTimer: startTimerPlayer2, addToTimer: addToTimerPlayer2 } = playerTimer(2);
+const player1TimerObject = playerTimer(1);
+const player2TimerObject = playerTimer(2);
+startTimerPlayer1 = player1TimerObject.startTimer;
+startTimerPlayer2 = player2TimerObject.startTimer;
+addToTimerPlayer1 = player1TimerObject.addToTimer;
+addToTimerPlayer2 = player2TimerObject.addToTimer; 
