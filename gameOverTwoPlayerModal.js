@@ -1,4 +1,4 @@
-const gameOverModal = (string, newScore1, newScore2) => `
+const gameOverModal = (string, newScore1, newScore2, pointScore1, pointScore2) => `
   <div class="modal show-modal">
     <div class="title" style="display:flex; justify-content: space-between; margin-bottom: 30px">
     ${[...string].map(c => {
@@ -6,6 +6,7 @@ const gameOverModal = (string, newScore1, newScore2) => `
   return `<span class="title-block spacer"> </span>`
 }).join("")}
     </div>
+    <div class="point-scores" style="font-size: 24px;">${pointScore1} - ${pointScore2}</div>
     <div class="scores">${newScore1} - ${newScore2}</div>
     <div class="start-button" onclick="startOver()">Click Here to Start Again!</div>
     <div class="endless-button" onclick="startReset()" style="margin-top: 30px">Click Here to Reset Scores!</div>
@@ -23,13 +24,13 @@ const getScores = () => {
   } catch (__error) {
     // do nothing
   }
-  return { winner: score1 >= score2 ? 1 : 2, newScore1, newScore2 };
+  return { winner: score1 >= score2 ? 1 : 2, newScore1, newScore2, pointScore1: score1, pointScore2: score2 };
 }
 
 const createGameOverModal = () => {
   const modal = document.createElement('div');
-  const { winner, newScore1, newScore2 } = getScores();
-  modal.innerHTML = gameOverModal(winner === 1 ? "Player 1 Wins!" : "Player 2 Wins!", newScore1, newScore2);
+  const { winner, newScore1, newScore2, pointScore1, pointScore2 } = getScores();
+  modal.innerHTML = gameOverModal(winner === 1 ? "Player 1 Wins!" : "Player 2 Wins!", newScore1, newScore2, pointScore1, pointScore2);
   document.body.appendChild(modal);
   modalEle = document.querySelector('.modal');
   setTimeout(() => modalEle.classList.remove('show-modal'), 100);
@@ -51,11 +52,13 @@ const startGameOverCheck = () => {
       createGameOverModal();
       clearInterval(modalGameOverCheck);
 
-      document.addEventListener('keydown', (ev) => {
-        if (ev.key === ' ' || ev.key === 'z') {
-          startOver();
-        }
-      })
+      setTimeout(() => {
+        document.addEventListener('keydown', (ev) => {
+          if (ev.key === ' ' || ev.key === 'z') {
+            startOver();
+          }
+        })
+      }, 3000);
     }
   }, 1000);
 }
