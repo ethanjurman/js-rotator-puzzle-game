@@ -5,6 +5,10 @@ audioRotateElement.volume = 0.3;
 const audioClearCellsElement = document.querySelector('#audio-clear-cells');
 audioClearCellsElement.preservesPitch = false;
 audioClearCellsElement.volume = 0.2;
+const audioRunningOutElement = document.querySelector('#audio-running-out');
+audioRunningOutElement.preservesPitch = false;
+audioRunningOutElement.playbackRate = 0.6;
+audioRunningOutElement.volume = 0.1;
 
 const playAudioMove = () => {
   audioMoveElement.currentTime = 0;
@@ -20,6 +24,11 @@ const playAudioClearCells = (chainClear = 1) => {
   audioClearCellsElement.currentTime = 0;
   audioClearCellsElement.playbackRate = chainClear * 2;
   audioClearCellsElement.play();
+}
+
+const playAudioRunningOut = () => {
+  audioRunningOutElement.currentTime = 0;
+  audioRunningOutElement.play();
 }
 
 document.addEventListener('keydown', (ev) => {

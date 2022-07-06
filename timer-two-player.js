@@ -92,9 +92,36 @@ const playerTimer = (playerId) => {
   return { startTimer, addToTimer };
 }
 
+function stepRunningOutTimer() {
+  const currentTime = new Date().getTime();
+  const timer1 = document.querySelector(`.player-1 > .timer`);
+  const timer2 = document.querySelector(`.player-2 > .timer`);
+  if (timer1.textContent == '000:000') {
+    timer1.classList.add('timerStopped');
+    return;
+  }
+  if (timer2.textContent == '000:000') {
+    timer2.classList.add('timerStopped');
+    return;
+  }
+  if (startTime !== -1) {
+    const newTimeP1 = player1TimerMS - (currentTime - startTime);
+    const newTimeP2 = player2TimerMS - (currentTime - startTime);
+    if (newTimeP1 < 10000 || newTimeP2 < 10000) {
+      playAudioRunningOut();
+    }
+  }
+
+  setTimeout(() => {
+    stepRunningOutTimer();
+  }, 1000)
+}
+
 const player1TimerObject = playerTimer(1);
 const player2TimerObject = playerTimer(2);
 startTimerPlayer1 = player1TimerObject.startTimer;
 startTimerPlayer2 = player2TimerObject.startTimer;
 addToTimerPlayer1 = player1TimerObject.addToTimer;
-addToTimerPlayer2 = player2TimerObject.addToTimer; 
+addToTimerPlayer2 = player2TimerObject.addToTimer;
+
+stepRunningOutTimer();

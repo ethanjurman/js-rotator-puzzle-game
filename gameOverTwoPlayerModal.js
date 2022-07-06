@@ -49,7 +49,7 @@ const startReset = () => {
 const startGameOverCheck = () => {
   let modalGameOverCheck = setInterval(() => {
     if (endGame === true) {
-      createGameOverModal();
+      setTimeout(() => { createGameOverModal() }, 2000);
       clearInterval(modalGameOverCheck);
 
       setTimeout(() => {
@@ -58,7 +58,7 @@ const startGameOverCheck = () => {
             startOver();
           }
         })
-      }, 3000);
+      }, 5000);
     }
   }, 1000);
 }

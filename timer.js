@@ -35,6 +35,7 @@ const updateTimer = () => {
 
 const startTimer = () => {
   startTime = new Date().getTime();
+  stepRunningOutTimer();
 }
 
 const addToTimer = (timeToAdd) => {
@@ -63,6 +64,23 @@ function stepTimer() {
   setTimeout(() => {
     stepTimer();
   }, 10)
+}
+
+function stepRunningOutTimer() {
+  const currentTime = new Date().getTime();
+  const timer = document.querySelector('.timer');
+  const newTime = timerMS - (currentTime - startTime);
+  if (timer.textContent == '000:000') {
+    timer.classList.add('timerStopped');
+    return;
+  }
+  if (newTime < 5000) {
+    playAudioRunningOut();
+  }
+
+  setTimeout(() => {
+    stepRunningOutTimer();
+  }, 1000)
 }
 
 makeTimer();
