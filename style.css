@@ -256,7 +256,7 @@ body {
 }
 
 .content > img {
-  width: calc(100% - 35px);
+  width: calc(100% - 115px);
   margin-top: 10px;
 }
 .show-modal {
