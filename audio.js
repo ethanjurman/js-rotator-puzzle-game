@@ -3,6 +3,8 @@ audioMoveElement.volume = 0.1;
 const audioRotateElement = document.querySelector('#audio-rotate');
 audioRotateElement.volume = 0.3;
 const audioClearCellsElement = document.querySelector('#audio-clear-cells');
+audioClearCellsElement.preservesPitch = false;
+audioClearCellsElement.volume = 0.2;
 
 const playAudioMove = () => {
   audioMoveElement.currentTime = 0;
@@ -14,8 +16,9 @@ const playAudioRotate = () => {
   audioRotateElement.play();
 }
 
-const playAudioClearCells = () => {
+const playAudioClearCells = (chainClear = 1) => {
   audioClearCellsElement.currentTime = 0;
+  audioClearCellsElement.playbackRate = chainClear * 2;
   audioClearCellsElement.play();
 }
 

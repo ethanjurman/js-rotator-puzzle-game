@@ -176,7 +176,7 @@ const makePlayer = (playerId) => {
           cells.forEach(cell => cell.remove());
         }, 200)
         wereItemsRemoved = true;
-        playAudioClearCells();
+        playAudioClearCells(chain);
       }
     }
     return wereItemsRemoved;
@@ -207,7 +207,7 @@ const makePlayer = (playerId) => {
           cells.forEach(cell => cell.remove());
         }, 200)
         wereItemsRemoved = true;
-        playAudioClearCells();
+        playAudioClearCells(chain);
       }
     }
     return wereItemsRemoved;
