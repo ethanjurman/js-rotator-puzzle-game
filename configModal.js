@@ -1,5 +1,6 @@
 let config;
 try {
+  debugger;
   config = {
     "config-p1-up": localStorage.getItem("config-p1-up") || "w",
     "config-p1-down": localStorage.getItem("config-p1-down") || "s",
@@ -13,6 +14,7 @@ try {
     "config-p2-rotate": localStorage.getItem("config-p2-rotate") || "z",
   }
 } catch (e) {
+  debugger;
   config = {
     "config-p1-up": "w",
     "config-p1-down": "s",
@@ -98,6 +100,7 @@ const configItem = (key) => (evt) => {
   const itemInput = document.getElementById(key);
   if (itemInput && evt.key) {
     config[key] = evt.key;
+    localStorage.setItem(key, evt.key);
     itemInput.value = evt.key;
   }
 }
