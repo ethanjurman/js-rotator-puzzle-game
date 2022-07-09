@@ -58,7 +58,7 @@ const configModal = () => `
 `
 
 const createConfigureModal = () => {
-  paused = new Date().getTime();
+  pauseGame();
   const modal = document.createElement('div');
   modal.innerHTML = configModal();
   document.body.appendChild(modal);
@@ -77,17 +77,7 @@ const createConfigureModal = () => {
 }
 
 const closeConfigureModal = () => {
-  if (startTime !== -1) {
-    const newUnpausedTime = new Date().getTime();
-    try {
-      timerMS += newUnpausedTime - paused;
-    } catch (e) { /* do nothing */ }
-    try {
-      player1TimerMS += newUnpausedTime - paused;
-      player2TimerMS += newUnpausedTime - paused;
-    } catch (e) { /* do nothing */ }
-  }
-  paused = 0;
+  unpauseGame();
   modalEle = document.querySelector('.modal');
   modalEle.classList.add('show-modal');
   setTimeout(() => { modalEle.remove() }, 500);

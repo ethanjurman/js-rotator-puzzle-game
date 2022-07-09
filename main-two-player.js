@@ -187,7 +187,8 @@ const makePlayer = (playerId) => {
           cells.forEach(cell => cell.remove());
         }, 200)
         wereItemsRemoved = true;
-        queueChainReset()
+        queueChainReset();
+        pauseTime(playerId);
         playAudioClearCells(chain);
       }
     }

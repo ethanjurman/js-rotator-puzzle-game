@@ -213,7 +213,8 @@ const clearRows = () => {
         cells.forEach(cell => cell.remove());
       }, 200)
       wereItemsRemoved = true;
-      queueChainReset()
+      queueChainReset();
+      pauseTime();
       playAudioClearCells(chain);
     }
   }

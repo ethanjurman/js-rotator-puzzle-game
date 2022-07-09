@@ -1,6 +1,40 @@
 let startTime = -1;
 let timerMS = 60000;
 let paused = 0;
+let pausedTime = 0;
+
+const pauseGame = () => {
+  if (!paused) {
+    paused = new Date().getTime();
+  }
+}
+
+const unpauseGame = () => {
+  if (startTime !== -1) {
+    const newUnpausedTime = new Date().getTime();
+    try {
+      timerMS += newUnpausedTime - paused;
+    } catch (e) { /* do nothing */ }
+  }
+  paused = 0;
+}
+
+const pauseTime = () => {
+  if (!pausedTime) {
+    pausedTime = new Date().getTime();
+  }
+}
+
+const unpauseTime = () => {
+  if (!pausedTime) { return; }
+  if (startTime !== -1) {
+    const newUnpausedTime = new Date().getTime();
+    try {
+      timerMS += newUnpausedTime - pausedTime;
+    } catch (e) { /* do nothing */ }
+  }
+  pausedTime = 0;
+}
 
 const msToSecondsString = (ms, padding) => {
   ms = `${ms}`
@@ -51,6 +85,7 @@ const addToTimer = (timeToAdd) => {
   bonusTimer.classList.add('showBonusTimer');
   setTimeout(() => {
     bonusTimer.classList.remove('showBonusTimer');
+    unpauseTime();
   }, 1000)
   timerMS += timeToAdd;
 }
@@ -61,7 +96,7 @@ function stepTimer() {
     timer.classList.add('timerStopped');
     return;
   }
-  if (startTime !== -1 && !paused) {
+  if (startTime !== -1 && !paused && !pausedTime) {
     updateTimer();
   }
 

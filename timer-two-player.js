@@ -7,6 +7,42 @@ let startTimerPlayer2;
 let addToTimerPlayer1;
 let addToTimerPlayer2;
 
+let pausedTime = { 1: 0, 2: 0 };
+
+const pauseGame = () => {
+  if (!paused) {
+    paused = new Date().getTime();
+  }
+}
+
+const unpauseGame = () => {
+  if (startTime !== -1) {
+    const newUnpausedTime = new Date().getTime();
+    try {
+      player1TimerMS += newUnpausedTime - paused;
+      player2TimerMS += newUnpausedTime - paused;
+    } catch (e) { /* do nothing */ }
+  }
+  paused = 0;
+}
+
+const pauseTime = (playerId) => {
+  if (!pausedTime[playerId]) {
+    pausedTime[playerId] = new Date().getTime();
+  }
+}
+
+const unpauseTime = (playerId) => {
+  if (!pausedTime[playerId]) { return; }
+  if (startTime !== -1) {
+    const newUnpausedTime = new Date().getTime();
+    try {
+      timerMS += newUnpausedTime - pausedTime[playerId];
+    } catch (e) { /* do nothing */ }
+  }
+  pausedTime[playerId] = 0;
+}
+
 const msToSecondsString = (ms, padding) => {
   ms = `${ms}`
   return `${ms.slice(0, -3).padStart(padding, "0") || 0}:${ms.slice(-3).padStart(padding, "0")}`
@@ -59,6 +95,7 @@ const playerTimer = (playerId) => {
     bonusTimer.classList.add('showBonusTimer');
     setTimeout(() => {
       bonusTimer.classList.remove('showBonusTimer');
+      unpauseTime(playerId);
     }, 1000);
     const damageTimer = document.querySelector(`.player-${playerId === 1 ? 2 : 1} > .damageTimer`);
     damageTimer.textContent = `-${msToSecondsString(timeToAdd, 0)}`;
@@ -79,7 +116,7 @@ const playerTimer = (playerId) => {
       timer.classList.add('timerEnded');
       return;
     }
-    if (startTime !== -1 && !paused) {
+    if (startTime !== -1 && !paused && !pausedTime[playerId]) {
       updateTimer(playerId);
     }
     setTimeout(() => {
