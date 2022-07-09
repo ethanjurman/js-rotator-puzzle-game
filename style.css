@@ -255,6 +255,8 @@ body {
   box-shadow: inset 0px -14px 16px -18px black;
   padding-left: 20px;
   padding-right: 10px;
+  background-color: #271d4996;
+  border-radius: 20px 5px 5px 20px;
 }
 .content > img {
   width: calc(100% - 115px);
@@ -350,6 +352,7 @@ body {
 /* Track */
 ::-webkit-scrollbar-track {
   background: #2a2242;
+  border-radius: 20px;
 }
 
 /* Handle */
