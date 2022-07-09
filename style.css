@@ -335,6 +335,11 @@ body {
   margin-bottom: 30px;
 }
 
+.config {
+  display: flex;
+  align-items: center;
+}
+
 /* scrollbar stuff */
 
 /* width */

@@ -30,11 +30,12 @@ const welcomeModal = `
     : `<p>Move the cursor by pushing <span style="color:F4D06F">WASD</span> or <span style="color:F4D06F">UP, DOWN, LEFT and RIGHT</span> on the keyboard.<br />Rotate a section of 4 blocks by pushing <span style="color:F4D06F">space<span> or <span style="color:F4D06F">Z</span>.</p>`}
       ${window.location.href.includes('twoPlayer') ? '' : `<p>On mobile & touch devices, <span style="color:F4D06F">tap on the screen</span> inbetween the four blocks you want to rotate.</p>`}
       <img src="./gifs/rotate.gif">
-      <p>Match an entire row or column of blocks with the same color to get points.</p>
+      <p>Match an entire row or column of blocks with the same color to get points and extra time.</p>
       <img src="./gifs/row-clear.gif">
       <img src="./gifs/column-clear.gif">
-      <p>Get a high score before the time runs out! Time starts after you rotate your first piece.</p>
+      <p>Get a high score before the time runs out! Use combos by chaining row and column clears together to get lots of points.<br/>Time starts after you rotate your first piece.</p>
       <img src="./gifs/combo.gif">
+      <p>Push <span style="color:F4D06F">Escape</span> or <span onclick="closeWelcomeModal(); setTimeout(() => createConfigureModal(), 500)" style="color:F4D06F">click here for configuration.</span></p>
     </div>
     <div class="start-button" onclick="closeWelcomeModal()">Click Here to Start!</div>
     ${window.location.href.includes('twoPlayer')

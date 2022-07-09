@@ -1,4 +1,5 @@
 let startTime = -1;
+let paused;
 let player1TimerMS = 120000;
 let player2TimerMS = 120000;
 let startTimerPlayer1;
@@ -78,7 +79,7 @@ const playerTimer = (playerId) => {
       timer.classList.add('timerEnded');
       return;
     }
-    if (startTime !== -1) {
+    if (startTime !== -1 && !paused) {
       updateTimer(playerId);
     }
     setTimeout(() => {
@@ -104,11 +105,14 @@ function stepRunningOutTimer() {
     timer2.classList.add('timerStopped');
     return;
   }
-  if (startTime !== -1) {
+  if (startTime !== -1 && !paused) {
     const newTimeP1 = player1TimerMS - (currentTime - startTime);
     const newTimeP2 = player2TimerMS - (currentTime - startTime);
     if (newTimeP1 < 10000 || newTimeP2 < 10000) {
       playAudioRunningOut();
+    }
+    if (newTimeP1 < 5000 || newTimeP2 < 5000) {
+      setTimeout(() => playAudioRunningOut(), 500);
     }
   }
 

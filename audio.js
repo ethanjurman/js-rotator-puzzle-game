@@ -1,14 +1,23 @@
 const audioMoveElement = document.querySelector('#audio-move');
-audioMoveElement.volume = 0.1;
 const audioRotateElement = document.querySelector('#audio-rotate');
-audioRotateElement.volume = 0.3;
 const audioClearCellsElement = document.querySelector('#audio-clear-cells');
-audioClearCellsElement.preservesPitch = false;
-audioClearCellsElement.volume = 0.2;
 const audioRunningOutElement = document.querySelector('#audio-running-out');
-audioRunningOutElement.preservesPitch = false;
-audioRunningOutElement.playbackRate = 0.6;
-audioRunningOutElement.volume = 0.1;
+
+const setAudioVolumeAndSettings = (volume) => {
+  audioMoveElement.volume = 0.2 * volume;
+  audioRotateElement.volume = 0.6 * volume;
+  audioClearCellsElement.preservesPitch = false;
+  audioClearCellsElement.volume = 0.4 * volume;
+  audioRunningOutElement.preservesPitch = false;
+  audioRunningOutElement.playbackRate = 0.6;
+  audioRunningOutElement.volume = 0.2 * volume;
+}
+
+try {
+  setAudioVolumeAndSettings(localStorage.getItem('config-sound') || 0.5)
+} catch (e) {
+  setAudioVolumeAndSettings(0.5)
+}
 
 const playAudioMove = () => {
   audioMoveElement.currentTime = 0;
@@ -32,19 +41,19 @@ const playAudioRunningOut = () => {
 }
 
 document.addEventListener('keydown', (ev) => {
-  if (endGame) {
+  if (endGame || paused) {
     return;
   }
-  if (ev.key === 'w' || ev.key === 'ArrowUp') {
+  if (ev.key === config["config-p1-up"] || ev.key === config["config-p2-up"]) {
     playAudioMove();
   }
-  if (ev.key === 'a' || ev.key === 'ArrowLeft') {
+  if (ev.key === config["config-p1-right"] || ev.key === config["config-p2-right"]) {
     playAudioMove();
   }
-  if (ev.key === 's' || ev.key === 'ArrowDown') {
+  if (ev.key === config["config-p1-down"] || ev.key === config["config-p2-down"]) {
     playAudioMove();
   }
-  if (ev.key === 'd' || ev.key === 'ArrowRight') {
+  if (ev.key === config["config-p1-left"] || ev.key === config["config-p2-left"]) {
     playAudioMove();
   }
 });

@@ -93,22 +93,22 @@ const makePlayer = (playerId) => {
   makeGrid();
 
   document.addEventListener('keydown', (ev) => {
-    if (endGame) {
+    if (endGame || paused) {
       return;
     }
-    if (playerId === 1 ? ev.key === 'w' : ev.key === 'ArrowUp') {
+    if (playerId === 1 ? ev.key === config["config-p1-up"] : ev.key === config["config-p2-up"]) {
       cursorPos = { x: cursorPos.x, y: cursorPos.y ? cursorPos.y - 1 : GRID_HEIGHT_SIZE - 2 }
     }
-    if (playerId === 1 ? ev.key === 'a' : ev.key === 'ArrowLeft') {
+    if (playerId === 1 ? ev.key === config["config-p1-right"] : ev.key === config["config-p2-right"]) {
       cursorPos = { x: cursorPos.x ? cursorPos.x - 1 : GRID_WIDTH_SIZE - 2, y: cursorPos.y }
     }
-    if (playerId === 1 ? ev.key === 's' : ev.key === 'ArrowDown') {
+    if (playerId === 1 ? ev.key === config["config-p1-down"] : ev.key === config["config-p2-down"]) {
       cursorPos = { x: cursorPos.x, y: (cursorPos.y + 1) % (GRID_HEIGHT_SIZE - 1) }
     }
-    if (playerId === 1 ? ev.key === 'd' : ev.key === 'ArrowRight') {
+    if (playerId === 1 ? ev.key === config["config-p1-left"] : ev.key === config["config-p2-left"]) {
       cursorPos = { x: (cursorPos.x + 1) % (GRID_WIDTH_SIZE - 1), y: cursorPos.y }
     }
-    if (playerId === 1 ? ev.key === ' ' : ev.key === 'z') {
+    if (playerId === 1 ? ev.key === config["config-p1-rotate"] : ev.key === config["config-p2-rotate"]) {
       rotateCells();
     }
     updateCursor();
@@ -151,6 +151,17 @@ const makePlayer = (playerId) => {
     }
   }
 
+  let chainResetTime = 0;
+  const queueChainReset = () => {
+    chainResetTime = new Date().getTime() + 3000;
+    const chainInternval = setInterval(() => {
+      const percent = (chainResetTime - new Date().getTime()) / 30;
+      const scoreBox = document.querySelector(`.score.playerId-${playerId}`);
+      scoreBox.style = `background-color: inherit; background: linear-gradient(to right, #60507b  ${percent}%, #392f5a ${percent}%)`
+    }, 10)
+    setTimeout(() => { chain = 1; clearInterval(chainInternval) }, 3000)
+  }
+
   const clearColumns = () => {
     let wereItemsRemoved = false;
     for (let i = 0; i < GRID_WIDTH_SIZE; i++) {
@@ -176,6 +187,7 @@ const makePlayer = (playerId) => {
           cells.forEach(cell => cell.remove());
         }, 200)
         wereItemsRemoved = true;
+        queueChainReset()
         playAudioClearCells(chain);
       }
     }
@@ -207,6 +219,7 @@ const makePlayer = (playerId) => {
           cells.forEach(cell => cell.remove());
         }, 200)
         wereItemsRemoved = true;
+        queueChainReset();
         playAudioClearCells(chain);
       }
     }
@@ -250,7 +263,6 @@ const makePlayer = (playerId) => {
     }
     if (!createHold) { // if create hold is false, allow creating items
       gravity();
-      chain = 1; // reset chain
       updateScore()
       const wereItemsAdded = makeTopCells();
       if (!wereItemsAdded) {

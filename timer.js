@@ -1,5 +1,6 @@
 let startTime = -1;
 let timerMS = 60000;
+let paused = 0;
 
 const msToSecondsString = (ms, padding) => {
   ms = `${ms}`
@@ -34,6 +35,9 @@ const updateTimer = () => {
 }
 
 const startTimer = () => {
+  if (document.querySelector('.modal')) {
+    return;  // modal up, don't start timer
+  }
   startTime = new Date().getTime();
   stepRunningOutTimer();
 }
@@ -57,7 +61,7 @@ function stepTimer() {
     timer.classList.add('timerStopped');
     return;
   }
-  if (startTime !== -1) {
+  if (startTime !== -1 && !paused) {
     updateTimer();
   }
 
@@ -74,8 +78,11 @@ function stepRunningOutTimer() {
     timer.classList.add('timerStopped');
     return;
   }
-  if (newTime < 5000) {
+  if (newTime < 11000 && !paused) {
     playAudioRunningOut();
+  }
+  if (newTime < 6000 && !paused) {
+    setTimeout(() => playAudioRunningOut(), 500);
   }
 
   setTimeout(() => {

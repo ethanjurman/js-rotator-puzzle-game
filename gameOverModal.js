@@ -55,8 +55,6 @@ const startEndless = () => {
   // reset game states
   endGame = false;
   startTime = -1;
-  const scoreEle = document.querySelector('.score');
-  scoreEle.textContent = '0'
   const timerEle = document.querySelector('.timerContainer');
   timerEle.remove();
   startGameOverCheck();
