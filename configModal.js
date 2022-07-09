@@ -11,7 +11,10 @@ try {
     "config-p2-right": localStorage.getItem("config-p2-right") || "ArrowLeft",
     "config-p2-left": localStorage.getItem("config-p2-left") || "ArrowRight",
     "config-p2-rotate": localStorage.getItem("config-p2-rotate") || "z",
+    "config-color-blind": localStorage.getItem("config-color-blind") || "0",
   }
+  const root = document.documentElement;
+  root.style.setProperty('--color-blind-mode', config["config-color-blind"]);
 } catch (e) {
   config = {
     "config-p1-up": "w",
@@ -24,14 +27,20 @@ try {
     "config-p2-right": "ArrowLeft",
     "config-p2-left": "ArrowRight",
     "config-p2-rotate": "z",
+    "config-color-blind": "0",
   }
 }
-
 
 const configModal = () => `
   <div class="modal show-modal">
     <div class="title" style="display:flex; justify-content: space-between; margin-bottom: 30px">
     ${[..."Settings"].map(c => `<span class="title-block" style="margin-right: 5px">${c}</span>`).join("")}
+    </div>
+    <div class="config-color-blind">Color Blind <input type="checkbox" id="config-color-blind" ${config['config-color-blind'] != '0' ? 'checked' : ''} />
+      <div class="cellfake color1" style="position: inherit;"></div>
+      <div class="cellfake color2" style="position: inherit;"></div>
+      <div class="cellfake color3" style="position: inherit;"></div>
+      <div class="cellfake color4" style="position: inherit;"></div>
     </div>
     <div class="config-sound">Sound <input type="range" id="config-sound" min="0" max="1" step="0.1" value=${localStorage.getItem('config-sound') || 0.5} /></div>
     <div class="config">
@@ -70,6 +79,17 @@ const createConfigureModal = () => {
     setAudioVolumeAndSettings(evt.target.value)
     try {
       localStorage.setItem('config-sound', evt.target.value);
+    } catch (e) {
+      // do nothing
+    }
+  })
+  const colorBlindEle = document.querySelector('#config-color-blind');
+  colorBlindEle.addEventListener('change', (evt) => {
+    try {
+      const root = document.documentElement;
+      root.style.setProperty('--color-blind-mode', evt.target.checked ? 1 : 0);
+      localStorage.setItem('config-color-blind', evt.target.checked ? 1 : 0);
+      config['config-color-blind'] = evt.target.checked ? 1 : 0;
     } catch (e) {
       // do nothing
     }
