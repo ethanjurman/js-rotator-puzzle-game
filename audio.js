@@ -31,7 +31,7 @@ const playAudioRotate = () => {
 
 const playAudioClearCells = (chainClear = 1) => {
   audioClearCellsElement.currentTime = 0;
-  audioClearCellsElement.playbackRate = chainClear * 2;
+  audioClearCellsElement.playbackRate = Math.min(chainClear * 2, 16);
   audioClearCellsElement.play();
 }
 
