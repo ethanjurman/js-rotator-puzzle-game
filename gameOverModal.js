@@ -12,8 +12,8 @@ const gameOverModal = () => `
     <span class="title-block">R</span>
     </div>
     <div style="margin: 50px">Total Score: ${scoreValue}</div>
-    <div class="start-button" onclick="startOver()">Click Here to Start Again!</div>
-    <div style="margin-top: 20px" class="endless-button" onclick="startEndless()">Click Here to Continue Endless.</div>
+    <div class="start-button" onclick="startOver()">Start Over!</div>
+    <div style="margin-top: 20px" class="endless-button" onclick="startEndless()">Continue Endless (no timer)</div>
   </div>
 `
 

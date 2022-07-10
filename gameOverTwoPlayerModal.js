@@ -8,8 +8,8 @@ const gameOverModal = (string, newScore1, newScore2, pointScore1, pointScore2) =
     </div>
     <div class="point-scores" style="font-size: 24px;">${pointScore1} - ${pointScore2}</div>
     <div class="scores">${newScore1} - ${newScore2}</div>
-    <div class="start-button" onclick="startOver()">Click Here to Start Again!</div>
-    <div class="endless-button" onclick="startReset()" style="margin-top: 30px">Click Here to Reset Scores!</div>
+    <div class="start-button" onclick="startOver()">Rematch!</div>
+    <div class="endless-button" onclick="startReset()" style="margin-top: 30px">Reset Scores</div>
   </div>
 `
 

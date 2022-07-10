@@ -145,6 +145,21 @@ body {
   border: 2px solid #5DC0B5;
 }
 
+.color5 {
+  background-color: #0081AF;
+  border: 2px solid #0081AF;
+}
+
+.color6 {
+  background-color: #c05d5d;
+  border: 2px solid #c05d5d;
+}
+
+.color7 {
+  background-color: #01161E;
+  border: 2px solid #616161;
+}
+
 .cursor {
   height: calc((var(--cell-height-m) + 12px) * 2);
   width: calc((var(--cell-width-m) + 12px) * 2);

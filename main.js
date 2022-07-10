@@ -1,4 +1,4 @@
-const COLORS = ['color1', 'color2', 'color3', 'color4'];
+let COLORS = ['color1', 'color2', 'color3', 'color4'];
 const GRID_HEIGHT_SIZE = Number(getComputedStyle(document.documentElement)
   .getPropertyValue('--cells-high')) || 6;
 const GRID_WIDTH_SIZE = Number(getComputedStyle(document.documentElement)
@@ -56,6 +56,15 @@ const makeScore = () => {
 const updateScore = () => {
   if (scoreValue === newScoreValue) {
     return;
+  }
+  if (scoreValue >= 500 && COLORS.length < 5) {
+    COLORS.push('color5');
+  }
+  if (scoreValue >= 800 && COLORS.length < 6) {
+    COLORS.push('color6');
+  }
+  if (scoreValue >= 900 && COLORS.length < 7) {
+    COLORS.push('color7');
   }
   const score = document.querySelector('.score');
   for (let i = scoreValue; i < newScoreValue + 1; i++) {
