@@ -231,15 +231,19 @@ const clearRows = () => {
 }
 
 const gravity = () => {
-  const cellElements = document.querySelectorAll('.cell')
-  for (cellElement of cellElements) {
-    const { x, y } = cellElement.dataset;
-    if (Number(y) === GRID_HEIGHT_SIZE - 1) {
-      continue;
-    }
-    if (!getCellItem(Number(x), Number(y) + 1)) {
-      cellElement.dataset.y = Number(y) + 1;
-      cellElement.style = `left: ${CELL_WIDTH * x}px; top: ${CELL_HEIGHT * (Number(y) + 1)}px;`;
+  for (let x = 0; x < GRID_WIDTH_SIZE; x++) {
+    for (let y = 0; y < GRID_HEIGHT_SIZE; y++) {
+      const cellElement = getCellItem(Number(x), Number(y));
+      if (!cellElement) {
+        return;
+      }
+      if (Number(y) === GRID_HEIGHT_SIZE - 1) {
+        continue;
+      }
+      if (!getCellItem(Number(x), Number(y) + 1)) {
+        cellElement.dataset.y = Number(y) + 1;
+        cellElement.style = `left: ${CELL_WIDTH * x}px; top: ${CELL_HEIGHT * (Number(y) + 1)}px;`;
+      }
     }
   }
 }

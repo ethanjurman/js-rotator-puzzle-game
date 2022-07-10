@@ -10,6 +10,7 @@ const pauseGame = () => {
 }
 
 const unpauseGame = () => {
+  if (!paused) { return; }
   if (startTime !== -1) {
     const newUnpausedTime = new Date().getTime();
     try {

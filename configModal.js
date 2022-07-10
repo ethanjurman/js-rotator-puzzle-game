@@ -68,6 +68,7 @@ const configModal = () => `
 
 const createConfigureModal = () => {
   pauseGame();
+  try { socketPause(); } catch (e) { /* ignore */ }
   const modal = document.createElement('div');
   modal.innerHTML = configModal();
   document.body.appendChild(modal);
@@ -98,6 +99,7 @@ const createConfigureModal = () => {
 
 const closeConfigureModal = () => {
   unpauseGame();
+  try { socketUnpause(); } catch (e) { /* ignore */ }
   modalEle = document.querySelector('.modal');
   modalEle.classList.add('show-modal');
   setTimeout(() => { modalEle.remove() }, 500);

@@ -7,16 +7,26 @@ const CELL_HEIGHT = (400 / GRID_HEIGHT_SIZE) + 4;
 const CELL_WIDTH = (400 / GRID_WIDTH_SIZE) + 4;
 
 let endGame = false;
+let rotateP1;
+let rotateP2;
 
-const makePlayer = (playerId) => {
+const searchParams = new URLSearchParams(window.location.search);
+let seed = Number(searchParams.get("seed")) || Math.floor(Math.random() * 100000000);
+
+const makePlayer = (playerId, playerSeed = seed) => {
   let cursorPos = { x: 0, y: 0 };
   let createHold = false;
   let scoreValue = 0;
   let newScoreValue = 0;
   let chain = 1;
 
+  function random() {
+    var x = Math.sin(playerSeed++) * 10000;
+    return x - Math.floor(x);
+  }
+
   const getRandomColor = () => {
-    return COLORS[Math.floor(Math.random() * COLORS.length)];
+    return COLORS[Math.floor(random() * COLORS.length)];
   }
 
   const makeCell = (x, y) => {
@@ -124,13 +134,15 @@ const makePlayer = (playerId) => {
     return document.querySelector(`.player-${playerId} > [data-x="${x}"][data-y="${y}"]`)
   }
 
-  const rotateCells = () => {
+  const rotateCells = (x = cursorPos.x, y = cursorPos.y, remote) => {
     const cells = document.querySelectorAll(`.player-${playerId} > .cell`)
     const areCellsBeingRemoved = Boolean(document.querySelector(`.player-${playerId} > .remove`));
     if (cells.length !== GRID_HEIGHT_SIZE * GRID_WIDTH_SIZE || areCellsBeingRemoved) {
       return;
     }
-    const { x, y } = cursorPos;
+    if (!remote) {
+      try { socketRotate(playerId, x, y) } catch (e) {/* ignore */ }
+    }
     const cellsToRotate = [[x, y], [x + 1, y], [x + 1, y + 1], [x, y + 1]];
     const cellElements = cellsToRotate.map((pair) => getCellItem(pair[0], pair[1]));
     cellElements.forEach((cellElement, index) => {
@@ -228,15 +240,19 @@ const makePlayer = (playerId) => {
   }
 
   const gravity = () => {
-    const cellElements = document.querySelectorAll(`.player-${playerId} > .cell`)
-    for (cellElement of cellElements) {
-      const { x, y } = cellElement.dataset;
-      if (Number(y) === GRID_HEIGHT_SIZE - 1) {
-        continue;
-      }
-      if (!getCellItem(Number(x), Number(y) + 1)) {
-        cellElement.dataset.y = Number(y) + 1;
-        cellElement.style = `left: ${CELL_WIDTH * x}px; top: ${CELL_HEIGHT * (Number(y) + 1)}px;`;
+    for (let x = 0; x < GRID_WIDTH_SIZE; x++) {
+      for (let y = 0; y < GRID_HEIGHT_SIZE; y++) {
+        const cellElement = getCellItem(Number(x), Number(y));
+        if (!cellElement) {
+          return;
+        }
+        if (Number(y) === GRID_HEIGHT_SIZE - 1) {
+          continue;
+        }
+        if (!getCellItem(Number(x), Number(y) + 1)) {
+          cellElement.dataset.y = Number(y) + 1;
+          cellElement.style = `left: ${CELL_WIDTH * x}px; top: ${CELL_HEIGHT * (Number(y) + 1)}px;`;
+        }
       }
     }
   }
@@ -276,7 +292,9 @@ const makePlayer = (playerId) => {
   }
 
   window.requestAnimationFrame(step);
+
+  return { rotateCells };
 }
 
-makePlayer(1);
-makePlayer(2);
+rotateP1 = makePlayer(1).rotateCells;
+rotateP2 = makePlayer(2).rotateCells;

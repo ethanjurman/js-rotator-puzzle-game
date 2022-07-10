@@ -39,6 +39,8 @@ const createGameOverModal = () => {
 
 const startOver = () => {
   const { newScore1, newScore2 } = getScores();
+  // TODO: include room and new seed
+  // TODO: send socket request for other server to load new seed
   window.location.href = `?welcomeModal=false&score1=${newScore1}&score2=${newScore2}`;
 }
 

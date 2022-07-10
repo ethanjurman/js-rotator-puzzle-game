@@ -9,13 +9,20 @@ let addToTimerPlayer2;
 
 let pausedTime = { 1: 0, 2: 0 };
 
-const pauseGame = () => {
+const pauseGame = (remote) => {
+  if (!remote) {
+    try { socketPause() } catch (e) {/* ignore */ }
+  }
   if (!paused) {
     paused = new Date().getTime();
   }
 }
 
-const unpauseGame = () => {
+const unpauseGame = (remote) => {
+  if (!remote) {
+    try { socketUnpause() } catch (e) {/* ignore */ }
+  }
+  if (!paused) { return; }
   if (startTime !== -1) {
     const newUnpausedTime = new Date().getTime();
     try {
