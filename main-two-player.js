@@ -12,6 +12,7 @@ let rotateP2;
 
 const searchParams = new URLSearchParams(window.location.search);
 let seed = Number(searchParams.get("seed")) || Math.floor(Math.random() * 100000000);
+searchParams.set("seed", seed);
 
 const makePlayer = (playerId, playerSeed = seed) => {
   let cursorPos = { x: 0, y: 0 };

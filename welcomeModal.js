@@ -15,13 +15,13 @@ const welcomeModal = `
     </div>
     ${window.location.href.includes('twoPlayer') ?
     `<div class="title">
-      <span class="title-block">V</span>
-      <span class="title-block">E</span>
-      <span class="title-block">R</span>
-      <span class="title-block">S</span>
-      <span class="title-block">U</span>
-      <span class="title-block">S</span>
-    </div>` : ''
+      <span class="title-block" style="font-size:45px; padding-right: 10px; padding-bottom: 10px;">V</span>
+      <span class="title-block" style="font-size:45px; padding-right: 10px; padding-bottom: 10px;">E</span>
+      <span class="title-block" style="font-size:45px; padding-right: 10px; padding-bottom: 10px;">R</span>
+      <span class="title-block" style="font-size:45px; padding-right: 10px; padding-bottom: 10px;">S</span>
+      <span class="title-block" style="font-size:45px; padding-right: 10px; padding-bottom: 10px;">U</span>
+      <span class="title-block" style="font-size:45px; padding-right: 10px; padding-bottom: 10px;">S</span>
+    </div>` : '<div style="height:60px"></div>'
   }
     <div class="content" onscroll="scrollModal()">
       <p><b>JS ROTATOR</b> is a fully vanilla JavaScript game inspired by games like Yoshi's Cookie & Tetris.<br/>Made by Ethan Jurman.</p>
@@ -37,11 +37,17 @@ const welcomeModal = `
       <img src="./gifs/combo.gif">
       <p>Push <span style="color:F4D06F">Escape</span> or <span onclick="closeWelcomeModal(); setTimeout(() => createConfigureModal(), 500)" style="color:F4D06F">click here for configuration.</span></p>
     </div>
-    <div class="start-button" onclick="closeWelcomeModal()">Click Here to Start!</div>
+    ${window.location.href.includes('twoPlayer')
+    ? `<div class="start-button" onclick="copyRoomCode()">Copy Room Code (for online multiplayer)</div>`
+    : `<div class="start-button" onclick="startEndless()">Start Endless (no timer)</div>`
+  }
+    <div>
+      <div class="start-button" onclick="closeWelcomeModal()">Click Here to Start!</div>
     ${window.location.href.includes('twoPlayer')
     ? `<a href="./index.html"><div class="start-button">Go to Single Player</div></a>`
     : `<a href="./twoPlayer.html"><div class="start-button">Go to Two Player</div></a>`
   }
+    </div>
 
   </div>
 `
@@ -74,6 +80,23 @@ const scrollModal = () => {
   const bottomShadow = Math.max(content.scrollTop - (content.scrollHeight - content.clientHeight), -14);
   const topShadow = Math.min(content.scrollTop, 14);
   content.style = `box-shadow: inset 0px ${bottomShadow}px 16px -18px black, inset 0px ${topShadow}px 16px -18px black;`
+}
+
+const updateClipboard = (newClip) => {
+  navigator.clipboard.writeText(newClip).then(function () {
+    /* clipboard successfully set */
+  }, function () {
+    /* clipboard write failed */
+  });
+}
+
+const copyRoomCode = () => {
+  navigator.permissions.query({ name: "clipboard-write" }).then(result => {
+    if (result.state == "granted" || result.state == "prompt") {
+      /* write to the clipboard now */
+    }
+  });
+  updateClipboard(window.location.href + '?' + searchParams.toString())
 }
 
 if (!window.location.search.includes('welcomeModal=false')) {

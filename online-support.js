@@ -1,6 +1,8 @@
 const socket = io();
 
-const roomId = searchParams.get('roomId');
+const roomId = searchParams.get('roomId') || `${Math.floor(Math.random() * 16777215).toString(16)
+  }-${(new Date().getTime()).toString(36)}`;
+searchParams.set('roomId', roomId);
 
 socket.emit('room-join', { roomId });
 
@@ -16,6 +18,10 @@ const socketRotate = (playerId, cursorX, cursorY) => {
   socket.emit("action", { action: "rotate", roomId, playerId, cursorX, cursorY });
 }
 
+const socketNewGame = (seed) => {
+  socket.emit("action", { action: "new-game", seed, roomId });
+}
+
 socket.on('action', (actionData) => {
   if (actionData.action === 'rotate' && actionData.playerId === 1) {
     rotateP1(actionData.cursorX, actionData.cursorY, true);
@@ -28,5 +34,8 @@ socket.on('action', (actionData) => {
   }
   if (actionData.action === 'unpause') {
     unpauseGame(true);
+  }
+  if (actionData.action === 'new-game') {
+    startOver(true, actionData.seed)
   }
 });

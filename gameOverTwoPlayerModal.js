@@ -37,11 +37,16 @@ const createGameOverModal = () => {
   showTitle();
 }
 
-const startOver = () => {
+const startOver = (remote, seed = (Math.floor(Math.random() * 100000000))) => {
   const { newScore1, newScore2 } = getScores();
-  // TODO: include room and new seed
-  // TODO: send socket request for other server to load new seed
-  window.location.href = `?welcomeModal=false&score1=${newScore1}&score2=${newScore2}`;
+  searchParams.set("seed", seed);
+  if (!remote) {
+    try { socketNewGame(seed) } catch (e) {/* ignore */ }
+  }
+  searchParams.set("score1", newScore1);
+  searchParams.set("score2", newScore2);
+  searchParams.set("welcomeModal", "false");
+  window.location.href = `?${searchParams.toString()}`;
 }
 
 const startReset = () => {

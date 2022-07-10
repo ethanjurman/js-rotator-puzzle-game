@@ -21,7 +21,6 @@ io.on('connection', (socket) => {
     roomId = evtData.roomId;
   })
   socket.on('action', (actionData) => {
-    console.log(actionData)
     socket.to(roomId).emit('action', actionData);
   });
 });
