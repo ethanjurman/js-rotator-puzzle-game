@@ -11,7 +11,7 @@ app.use(express.static(path.join(__dirname, '../')));
 app.use((__req, res) => res.sendFile(path.join(__dirname, '../index.html')));
 
 const port = 3000
-server.listen(port, () => console.log(`Server Running\http://localhost:${port}`));
+server.listen(port, () => console.log(`Server Running\nhttp://localhost:${port}`));
 
 io.on('connection', (socket) => {
   let roomId;
