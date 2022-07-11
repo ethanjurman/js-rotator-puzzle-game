@@ -63,7 +63,7 @@ const updateScore = () => {
   if (scoreValue >= 800 && COLORS.length < 6) {
     COLORS.push('color6');
   }
-  if (scoreValue >= 900 && COLORS.length < 7) {
+  if (scoreValue >= 1200 && COLORS.length < 7) {
     COLORS.push('color7');
   }
   const score = document.querySelector('.score');
