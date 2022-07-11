@@ -165,14 +165,16 @@ const makePlayer = (playerId, playerSeed = seed) => {
   }
 
   let chainResetTime = 0;
+  let resetChainTimeout;
   const queueChainReset = () => {
-    chainResetTime = new Date().getTime() + 3000;
+    chainResetTime = new Date().getTime() + 2500;
+    clearTimeout(resetChainTimeout)
     const chainInternval = setInterval(() => {
       const percent = (chainResetTime - new Date().getTime()) / 30;
       const scoreBox = document.querySelector(`.score.playerId-${playerId}`);
       scoreBox.style = `background-color: inherit; background: linear-gradient(to right, #60507b  ${percent}%, #392f5a ${percent}%)`
     }, 10)
-    setTimeout(() => { chain = 1; clearInterval(chainInternval) }, 3000)
+    resetChainTimeout = setTimeout(() => { chain = 1; clearInterval(chainInternval) }, 2500)
   }
 
   const clearColumns = () => {
