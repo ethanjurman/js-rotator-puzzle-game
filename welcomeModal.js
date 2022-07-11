@@ -35,7 +35,7 @@ const welcomeModal = `
       <img src="./gifs/column-clear.gif">
       <p>Get a high score before the time runs out! Use combos by chaining row and column clears together to get lots of points.<br/>Time starts after you rotate your first piece.</p>
       <img src="./gifs/combo.gif">
-      <p>Push <span style="color:F4D06F">Escape</span> or <span onclick="closeWelcomeModal(); setTimeout(() => createConfigureModal(), 500)" style="color:F4D06F">click here for configuration.</span></p>
+      <p>Push <span style="color:F4D06F">Escape</span> or <span onclick="closeWelcomeModal(); setTimeout(() => createConfigureModal(), 500)" style="color:F4D06F; cursor:pointer;">click here for configuration.</span></p>
     </div>
     ${window.location.href.includes('twoPlayer')
     ? `<div class="start-button" onclick="copyRoomCode()">Copy Room Code (for online multiplayer)</div>`

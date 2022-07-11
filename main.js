@@ -126,13 +126,12 @@ const getCellItem = (x, y) => {
   return document.querySelector(`[data-x="${x}"][data-y="${y}"]`)
 }
 
-const rotateCells = () => {
+const rotateCells = (x = cursorPos.x, y = cursorPos.y) => {
   const cells = document.querySelectorAll('.cell')
   const areCellsBeingRemoved = Boolean(document.querySelector('.remove'));
   if (cells.length !== GRID_HEIGHT_SIZE * GRID_WIDTH_SIZE || areCellsBeingRemoved) {
     return;
   }
-  const { x, y } = cursorPos;
   const cellsToRotate = [[x, y], [x + 1, y], [x + 1, y + 1], [x, y + 1]];
   const cellElements = cellsToRotate.map((pair) => getCellItem(pair[0], pair[1]));
   cellElements.forEach((cellElement, index) => {
