@@ -24,7 +24,7 @@ const welcomeModal = `
     </div>` : '<div style="height:60px"></div>'
   }
     <div class="content" onscroll="scrollModal()">
-      <p><b>JS ROTATOR</b> is a JavaScript web game inspired by games like Yoshi's Cookie & Tetris.<br/>Made by Ethan Jurman.</p>
+      <p><b>JS ROTATOR</b> is a JavaScript web puzzle game inspired by games like Yoshi's Cookie & Tetris.<br/>Made by Ethan Jurman.</p>
       ${window.location.href.includes('twoPlayer')
     ? `<p>Move the cursor by pushing <span style="color:F4D06F">WASD</span> (for player 1)<br /> and <span style="color:F4D06F">UP, DOWN, LEFT and RIGHT</span> (for player 2).<br />Rotate a section of 4 blocks by pushing <span style="color:F4D06F">space</span> (for player 1) and <span style="color:F4D06F">Z</span> (for player 2).</p>`
     : `<p>Move the cursor by pushing <span style="color:F4D06F">WASD</span> or <span style="color:F4D06F">UP, DOWN, LEFT and RIGHT</span> on the keyboard.<br />Rotate a section of 4 blocks by pushing <span style="color:F4D06F">space<span> or <span style="color:F4D06F">Z</span>.</p>`}
