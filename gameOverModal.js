@@ -27,26 +27,7 @@ const createGameOverModal = () => {
 }
 
 const startOver = () => {
-  const modal = document.querySelector('.modal');
-  modal.classList.add('remove-modal');
-  // reset game states
-  endGame = false;
-  startTime = -1;
-  newScoreValue = 0;
-  scoreValue = 0;
-  timerMS = 60000; // reset this timer at the start of the game
-  const scoreEle = document.querySelector('.score');
-  scoreEle.textContent = '0'
-  const timerEle = document.querySelector('.timerContainer');
-  timerEle.remove();
-
-  makeTimer();
-  stepTimer();
-  startGameOverCheck();
-
-  setTimeout(() => {
-    modal.remove();
-  }, 500)
+  window.location.href = '';
 }
 
 const startEndless = () => {
