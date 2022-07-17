@@ -166,15 +166,21 @@ const makePlayer = (playerId, playerSeed = seed) => {
 
   let chainResetTime = 0;
   let resetChainTimeout;
+  let chainInternval;
   const queueChainReset = () => {
     chainResetTime = new Date().getTime() + 2500;
-    clearTimeout(resetChainTimeout)
-    const chainInternval = setInterval(() => {
+    clearTimeout(resetChainTimeout);
+    clearInterval(chainInternval);
+    chainInternval = setInterval(() => {
       const percent = (chainResetTime - new Date().getTime()) / 30;
       const scoreBox = document.querySelector(`.score.playerId-${playerId}`);
       scoreBox.style = `background-color: inherit; background: linear-gradient(to right, #60507b  ${percent}%, #392f5a ${percent}%)`
     }, 10)
-    resetChainTimeout = setTimeout(() => { chain = 1; clearInterval(chainInternval) }, 2500)
+    resetChainTimeout = setTimeout(() => {
+      chain = 1;
+      clearInterval(chainInternval);
+      hideChainElement(`.grid.player-${playerId} > .chain-counter`);
+    }, 2500)
   }
 
   const clearColumns = () => {
@@ -202,9 +208,11 @@ const makePlayer = (playerId, playerSeed = seed) => {
           cells.forEach(cell => cell.remove());
         }, 200)
         wereItemsRemoved = true;
+        showChainElement(`.grid.player-${playerId} > .chain-counter`);
         queueChainReset();
         pauseTime(playerId);
         playAudioClearCells(chain);
+        increaseChainElement(chain, `.grid.player-${playerId} > .chain-counter`);
       }
     }
     return wereItemsRemoved;
@@ -235,8 +243,10 @@ const makePlayer = (playerId, playerSeed = seed) => {
           cells.forEach(cell => cell.remove());
         }, 200)
         wereItemsRemoved = true;
+        showChainElement(`.grid.player-${playerId} > .chain-counter`);
         queueChainReset();
         playAudioClearCells(chain);
+        increaseChainElement(chain, `.grid.player-${playerId} > .chain-counter`);
       }
     }
     return wereItemsRemoved;
@@ -301,3 +311,6 @@ const makePlayer = (playerId, playerSeed = seed) => {
 
 rotateP1 = makePlayer(1).rotateCells;
 rotateP2 = makePlayer(2).rotateCells;
+
+makeChainCounter(document.querySelector('.grid.player-1'));
+makeChainCounter(document.querySelector('.grid.player-2'));

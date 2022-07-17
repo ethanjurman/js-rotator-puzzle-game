@@ -32,7 +32,7 @@ try {
 }
 
 const configModal = () => `
-  <div class="modal show-modal">
+  <div class="modal show-modal config-modal">
     <div class="title" style="display:flex; justify-content: space-between; margin-bottom: 30px">
     ${[..."Settings"].map(c => `<span class="title-block" style="margin-right: 5px">${c}</span>`).join("")}
     </div>
@@ -128,3 +128,23 @@ document.addEventListener('keydown', (evt) => {
 const restart = () => {
   window.location.href = "";
 }
+
+const createConfigModalButton = () => {
+  const modalButton = document.createElement('div');
+  modalButton.classList.add('config-modal-button');
+  modalButton.textContent = '⚙️';
+  modalButton.onclick = () => {
+    const modalEle = document.querySelector('.modal');
+    if (modalEle && modalEle.classList.contains('config-modal')) {
+      closeConfigureModal();
+      return;
+    }
+    if (modalEle) {
+      modalEle.remove();
+    }
+    createConfigureModal();
+  };
+  document.body.appendChild(modalButton);
+}
+
+createConfigModalButton();

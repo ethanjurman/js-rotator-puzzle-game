@@ -155,15 +155,21 @@ const rotateCells = (x = cursorPos.x, y = cursorPos.y) => {
 
 let chainResetTime = 0;
 let resetChainTimeout;
+let chainInternval;
 const queueChainReset = () => {
   chainResetTime = new Date().getTime() + 2500;
-  clearTimeout(resetChainTimeout)
-  const chainInternval = setInterval(() => {
+  clearTimeout(resetChainTimeout);
+  clearInterval(chainInternval);
+  chainInternval = setInterval(() => {
     const percent = (chainResetTime - new Date().getTime()) / 30;
     const scoreBox = document.querySelector('.score');
     scoreBox.style = `background-color: inherit; background: linear-gradient(to right, #60507b  ${percent}%, #392f5a ${percent}%)`
   }, 10)
-  resetChainTimeout = setTimeout(() => { chain = 1; clearInterval(chainInternval) }, 2500)
+  resetChainTimeout = setTimeout(() => {
+    chain = 1;
+    clearInterval(chainInternval);
+    hideChainElement();
+  }, 2500)
 }
 
 const clearColumns = () => {
@@ -191,8 +197,10 @@ const clearColumns = () => {
         cells.forEach(cell => cell.remove());
       }, 200)
       wereItemsRemoved = true;
+      showChainElement();
       queueChainReset()
       playAudioClearCells(chain);
+      increaseChainElement(chain);
     }
   }
   return wereItemsRemoved;
@@ -223,9 +231,11 @@ const clearRows = () => {
         cells.forEach(cell => cell.remove());
       }, 200)
       wereItemsRemoved = true;
+      showChainElement();
       queueChainReset();
       pauseTime();
       playAudioClearCells(chain);
+      increaseChainElement(chain);
     }
   }
   return wereItemsRemoved;
@@ -283,6 +293,7 @@ const step = () => {
   }, 50)
 }
 
+makeChainCounter();
 window.requestAnimationFrame(step);
 
 
