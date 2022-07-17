@@ -7,6 +7,7 @@ const makeChainCounter = (appendItem = document.querySelector('.grid')) => {
 const showChainElement = (query = '.chain-counter') => {
   const chainElement = document.querySelector(query);
   chainElement.textContent = 'x1';
+  chainElement.style.fontSize = '52px';
   chainElement.classList.remove('hide-chain-counter');
   chainElement.classList.add('show-chain-counter');
 }
@@ -25,6 +26,7 @@ const hideChainElement = (query = '.chain-counter') => {
 const increaseChainElement = (chainCount, query = '.chain-counter') => {
   const chainElement = document.querySelector(query);
   chainElement.classList.add('bump-chain-counter');
-  chainElement.textContent = `x${chainCount}`
+  chainElement.textContent = `x${chainCount}`;
+  chainElement.style.fontSize = `${44 + 8 * chainCount}px`;
   setTimeout(() => chainElement.classList.remove('bump-chain-counter'), 1000)
 }

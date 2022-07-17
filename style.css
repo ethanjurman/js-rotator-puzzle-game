@@ -415,6 +415,7 @@ body {
   transition: all 0.2s ease-in-out;
   transform: translateY(30px) rotate(13deg);
   opacity: 0;
+  z-index: 6;
 }
 
 .show-chain-counter {
