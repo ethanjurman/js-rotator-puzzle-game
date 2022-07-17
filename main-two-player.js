@@ -9,6 +9,8 @@ const CELL_WIDTH = (400 / GRID_WIDTH_SIZE) + 4;
 let endGame = false;
 let rotateP1;
 let rotateP2;
+let updateCursorP1;
+let updateCursorP2;
 
 const searchParams = new URLSearchParams(window.location.search);
 let seed = Number(searchParams.get("seed")) || Math.floor(Math.random() * 100000000);
@@ -125,9 +127,8 @@ const makePlayer = (playerId, playerSeed = seed) => {
     updateCursor();
   });
 
-  const updateCursor = () => {
+  const updateCursor = (x = cursorPos.x, y = cursorPos.y) => {
     const cursor = document.querySelector(`.player-${playerId} > .cursor`);
-    const { x, y } = cursorPos;
     cursor.style = `left: ${CELL_WIDTH * x}px; top: ${CELL_HEIGHT * y}px;`
   }
 
@@ -140,6 +141,10 @@ const makePlayer = (playerId, playerSeed = seed) => {
     const areCellsBeingRemoved = Boolean(document.querySelector(`.player-${playerId} > .remove`));
     if (cells.length !== GRID_HEIGHT_SIZE * GRID_WIDTH_SIZE || areCellsBeingRemoved) {
       return;
+    }
+    if (x != cursorPos.x || y != cursorPos.y) {
+      cursorPos = { x, y };
+      updateCursor();
     }
     if (!remote) {
       try { socketRotate(playerId, x, y) } catch (e) {/* ignore */ }
@@ -306,11 +311,17 @@ const makePlayer = (playerId, playerSeed = seed) => {
 
   window.requestAnimationFrame(step);
 
-  return { rotateCells };
+  return { rotateCells, updateCursor };
 }
 
-rotateP1 = makePlayer(1).rotateCells;
-rotateP2 = makePlayer(2).rotateCells;
+player1Functions = makePlayer(1);
+player2Functions = makePlayer(2);
+
+rotateP1 = player1Functions.rotateCells;
+rotateP2 = player2Functions.rotateCells;
+updateCursorP1 = player1Functions.updateCursor;
+updateCursorP2 = player2Functions.updateCursor;
+
 
 makeChainCounter(document.querySelector('.grid.player-1'));
 makeChainCounter(document.querySelector('.grid.player-2'));
