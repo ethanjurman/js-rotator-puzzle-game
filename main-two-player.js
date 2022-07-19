@@ -11,6 +11,8 @@ let rotateP1;
 let rotateP2;
 let updateCursorP1;
 let updateCursorP2;
+let cursorP1;
+let cursorP2;
 
 const searchParams = new URLSearchParams(window.location.search);
 let seed = Number(searchParams.get("seed")) || Math.floor(Math.random() * 100000000);
@@ -31,6 +33,8 @@ const makePlayer = (playerId, playerSeed = seed) => {
   const getRandomColor = () => {
     return COLORS[Math.floor(random() * COLORS.length)];
   }
+
+  const getCursorPos = () => cursorPos
 
   const makeCell = (x, y) => {
     const cell = document.createElement('div');
@@ -311,7 +315,7 @@ const makePlayer = (playerId, playerSeed = seed) => {
 
   window.requestAnimationFrame(step);
 
-  return { rotateCells, updateCursor };
+  return { rotateCells, updateCursor, getCursorPos };
 }
 
 player1Functions = makePlayer(1);
@@ -321,6 +325,8 @@ rotateP1 = player1Functions.rotateCells;
 rotateP2 = player2Functions.rotateCells;
 updateCursorP1 = player1Functions.updateCursor;
 updateCursorP2 = player2Functions.updateCursor;
+getCursorP1 = player1Functions.getCursorPos;
+getCursorP2 = player2Functions.getCursorPos;
 
 
 makeChainCounter(document.querySelector('.grid.player-1'));

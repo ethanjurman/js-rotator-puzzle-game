@@ -7,27 +7,36 @@ const checkForCPU = (playerId) => {
 }
 
 const cloneBoard = (boardState) => {
-  return boardState.map(a => { return { ...a } })
+  return [...boardState.map(a => ([...a]))]
 }
 
 let cpuOn;
 const makeCPU = (playerId, level) => {
   const rotateCells = playerId === 1 ? rotateP1 : rotateP2;
+  const updateCursor = playerId === 1 ? updateCursorP1 : updateCursorP2;
+  const getCursorPos = playerId === 1 ? getCursorP1 : getCursorP2;
+
   cpuOn = setInterval(() => {
-    if (paused || endGame) {
-      return;
-    }
-    const boardState = getBoardState(playerId);
-    const { score, moves } = tryBoardMoves({ cpuLevel: level, boardState });
-    if (score > 0) {
-      moves.forEach((move, index) => {
-        setTimeout(() => rotateCells(move.x, move.y), 150 * index)
-      })
-    }
-    if (score === 0) {
-      rotateCells(Math.floor(Math.random() * 5), Math.floor(Math.random() * 5));
-    }
-  }, 1500)
+    setTimeout(() => {
+      if (paused || endGame) {
+        return;
+      }
+      const boardState = getBoardState(playerId);
+      const { score, moves } = tryBoardMoves({ cpuLevel: level, boardState });
+      if (score > 0) {
+        moves.forEach((move, index) => {
+          setTimeout(() => rotateCells(move.x, move.y), 150 * index)
+        })
+      }
+      const boardHeatMove = tryBoardHeatMove({ cpuLevel: level, boardState });
+      if (score === 0 && boardHeatMove) {
+        setTimeout(() => rotateCells(boardHeatMove.moves[0].x, boardHeatMove.moves[0].y), 350)
+      }
+      if (score === 0 && !boardHeatMove) {
+        rotateCells(Math.floor(Math.random() * 5), Math.floor(Math.random() * 5));
+      }
+    }, Math.random() * 500);
+  }, 850)
 }
 
 const getBoardState = (playerId) => {
@@ -54,19 +63,37 @@ const tryBoardMoves = ({ cpuLevel, boardState, moves = [], score = 0 }) => {
     for (let x = xMin; x < xMax; x++) {
       for (let y = yMin; y < yMax; y++) {
         const moveResult = tryMove(boardState, x, y);
-        if (moveResult.score > 0) {
-          return { cpuLevel, boardState: moveResult.newBoardState, moves: [...moves, { x, y }], score: moveResult.score };
-        }
-        // checking futureMoves
         const futureMoveResult = tryBoardMoves({ cpuLevel, boardState: moveResult.newBoardState, moves: [...moves, { x, y }], score: moveResult.score });
+        // checking futureMoves
         if (futureMoveResult.score > 0) {
           return futureMoveResult;
+        }
+        if (moveResult.score > 0) {
+          return { cpuLevel, boardState: moveResult.newBoardState, moves: [...moves, { x, y }], score: moveResult.score };
         }
       }
     }
   }
-
   return { cpuLevel, boardState, moves, score };
+}
+
+const tryBoardHeatMove = ({ cpuLevel, boardState, moves = [], score = 0 }) => {
+  const boardScore = checkBoardHeatScore(boardState);
+  let maxScore = boardScore;
+  let maxScoreMove = null;
+  for (let x = 0; x < 5; x++) {
+    for (let y = 0; y < 5; y++) {
+      const moveResult = tryHeatMove(boardState, x, y);
+      if (moveResult.score > maxScore) {
+        maxScore = moveResult.score;
+        maxScoreMove = { x, y };
+      }
+    }
+  }
+  if (maxScoreMove) {
+    return { cpuLevel, boardState, moves: [maxScoreMove], score };
+  }
+  return null;
 }
 
 const tryMove = (boardState, x, y) => {
@@ -79,22 +106,55 @@ const tryMove = (boardState, x, y) => {
   return { newBoardState, score: checkBoardState(newBoardState) };
 }
 
+const tryHeatMove = (boardState, x, y) => {
+  const newBoardState = cloneBoard(boardState);
+  newBoardState[x + 1][y] = boardState[x][y];
+  newBoardState[x + 1][y + 1] = boardState[x + 1][y];
+  newBoardState[x][y] = boardState[x][y + 1];
+  newBoardState[x][y + 1] = boardState[x + 1][y + 1];
+
+  return { newBoardState, score: checkBoardHeatScore(newBoardState) };
+}
+
 const checkBoardState = (boardState, score = 0) => {
   const newScore = checkBoardStateRows(boardState, score) + checkBoardStateColumns(boardState, score);
   return newScore;
 }
 
-const checkBoardHeatScore = (boardState) => {
-  let score = 0;
-  for (let i = 0; i < boardState.length; i++) {
-    for (let j = 0; j < boardState[i].length; j++) {
-      if (i != 0) {
-        score += boardState[i][j] == boardState[i - 1][j];
-      }
-      if (j != 0) {
-        score += boardState[i][j] == boardState[i][j - 1];
+const getBoardStateColumn = (boardState, column) => {
+  let cells = [];
+  for (let x = 0; x < GRID_WIDTH_SIZE; x++) {
+    for (let y = 0; y < GRID_HEIGHT_SIZE; y++) {
+      if (x === column) {
+        cells.push(boardState[x][y]);
       }
     }
+  }
+  return cells;
+}
+
+const getBoardStateRow = (boardState, row) => {
+  let cells = [];
+  for (let x = 0; x < GRID_WIDTH_SIZE; x++) {
+    for (let y = 0; y < GRID_HEIGHT_SIZE; y++) {
+      if (y === row) {
+        cells.push(boardState[x][y]);
+      }
+    }
+  }
+  return cells;
+}
+
+const checkBoardHeatScore = (checkedBoardState) => {
+  let score = 0;
+  for (let i = 0; i < checkedBoardState.length; i++) {
+    const rowScore = 4 / (new Set(getBoardStateRow(checkedBoardState, i)).size)
+    const columnScore = 4 / (new Set(getBoardStateColumn(checkedBoardState, i)).size)
+    if (rowScore === 4 || columnScore === 4) {
+      return Infinity;
+    }
+    score += rowScore * rowScore;
+    score += columnScore * columnScore;
   }
   return score;
 }
