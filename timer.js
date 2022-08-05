@@ -93,6 +93,9 @@ const addToTimer = (timeToAdd) => {
 
 function stepTimer() {
   const timer = document.querySelector('.timer');
+  if (!timer) {
+    return;
+  }
   if (timer.textContent == '000:000') {
     timer.classList.add('timerStopped');
     return;

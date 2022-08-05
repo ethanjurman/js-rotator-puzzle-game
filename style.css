@@ -39,6 +39,39 @@ a {
   --cell-height-m: calc(var(--cell-height) + 4px);
   --color-blind-mode: 0;
 }
+:root.color-theme-1 {
+  --color-1: #df8022;
+  --color-2: #bbbbbb;
+  --color-2-tiny: #ffffff;
+  --color-2-shine: 0.5;
+  --color-3: #a975b5;
+  --color-4: #4bbfb2;
+  --color-5: #0081AF;
+  --color-6: #c05d5d;
+  --color-7: #01161E;
+}
+:root.color-theme-2 {
+  --color-1: #226ddd;
+  --color-2: #dc3231;
+  --color-3: #3fb223;
+  --color-4: #a445de;
+  --color-5: #f6891c;
+  --color-6: #bbbbbb;
+  --color-6-shine: 0.5;
+  --color-7: #01161E;
+}
+:root.color-theme-3 {
+  --color-1: #ff5800;
+  --color-2: #bbbbbb;
+  --color-2-tiny: #ffffff;
+  --color-2-shine: 0.5;
+  --color-3: #b71234;
+  --color-4: #0046ad;
+  --color-4-shine: 0.2;
+  --color-5: #eebc00;
+  --color-6: #009b48;
+  --color-7: #01161E;
+}
 
 html,
 body {
@@ -93,23 +126,17 @@ body {
   content: "";
   width: 50px;
   height: 28px;
-  background: rgba(255,255,255, 0.15);
   position: fixed;
   border-radius: 18px 18px 100% 100%;
+  /* background color defined by color scheme & color number */
 }
 .cell::after {
   content: "";
   width: 50px;
   height: 47px;
-  background: rgba(255,255,255,0.2);
   position: fixed;
   border-radius: 11px;
-}
-.cell.color2:before {
-  background: rgba(255,255,255,0.7);
-}
-.cell.color2:after {
-  background: rgba(255,255,255,0.8);
+  /* background color defined by color scheme & color number */
 }
 .cellfake {
   display:inline-block;
@@ -121,13 +148,12 @@ body {
   border-radius: 4px;
   box-shadow: 0px 2px 2px #201f20;
 }
-.cellfake.color2 {
-  background-color: #fff;
-}
 
 .remove {
-  transition: all 0.1s;
-  transform: translate(16px, 16px) scale(0, 0) rotate(90deg);
+  transition: all 0.25s;
+  transform: translate(16px, 16px) scale(0, 0) rotate(1080deg);
+  background-color:#e4e45f !important;
+  border-color:#e4e45f !important;
 }
 
 .cell.color1, .cellfake.color1 {
@@ -135,7 +161,7 @@ body {
   background-size: calc(var(--color-blind-mode) * 50px);
   background-blend-mode: soft-light;
 }
-.cell.color2::after, .cellfake.color2 {
+.cell.color2, .cellfake.color2 {
   background-image: url('./game-icons/two-icon.png');
   background-size: calc(var(--color-blind-mode) * 50px);
 }
@@ -149,44 +175,109 @@ body {
   background-size: calc(var(--color-blind-mode) * 50px);
   background-blend-mode: soft-light;
 }
+.cell.color5 {
+  background-image: url('./game-icons/five-icon.png');
+  background-size: calc(var(--color-blind-mode) * 50px);
+  background-blend-mode: soft-light;
+}
+.cell.color6 {
+  background-image: url('./game-icons/six-icon.png');
+  background-size: calc(var(--color-blind-mode) * 50px);
+  background-blend-mode: soft-light;
+}
+.cell.color7 {
+  background-image: url('./game-icons/seven-icon.png');
+  background-size: calc(var(--color-blind-mode) * 50px);
+  background-blend-mode: soft-light;
+}
 
 .color1 {
-  background-color: #df8022;
-  border: 2px solid #df8022;
+  background-color: var(--color-1);
+  border: 2px solid var(--color-1);
+}
+.cell.color1::before {
+  background: rgba(255,255,255,var(--color-1-shine, 0.15));
+}
+.cell.color1::after {
+  background: rgba(255,255,255,calc(var(--color-1-shine, 0.15) + 0.1));
+}
+.color1.cellfake {
+  background-color: var(--color-1-tiny, var(--color-1));
 }
 
-.cell.color2 {
-  background-color: #bbb;
-  border: 2px solid #bbb;
-}
 .color2 {
-  background-color: #fff;
-  border: 2px solid #fff;
+  background-color: var(--color-2);
+  border: 2px solid var(--color-2);
+}
+.cell.color2::before {
+  background: rgba(255,255,255,var(--color-2-shine, 0.15));
+}
+.cell.color2::after {
+  background: rgba(255,255,255,calc(var(--color-2-shine, 0.15) + 0.1));
+}
+.color2.cellfake {
+  background-color: var(--color-2-tiny, var(--color-2));
 }
 
 .color3 {
-  background-color: #a975b5;
-  border: 2px solid #a975b5;
+  background-color: var(--color-3);
+  border: 2px solid var(--color-3);
+}
+.cell.color3::before {
+  background: rgba(255,255,255,var(--color-3-shine, 0.15));
+}
+.cell.color3::after {
+  background: rgba(255,255,255,calc(var(--color-3-shine, 0.15) + 0.1));
+}
+.color3.cellfake {
+  background-color: var(--color-3-tiny, var(--color-3));
 }
 
 .color4 {
-  background-color: #4bbfb2;
-  border: 2px solid #4bbfb2;
+  background-color: var(--color-4);
+  border: 2px solid var(--color-4);
+}
+.cell.color4::before {
+  background: rgba(255,255,255,var(--color-4-shine, 0.15));
+}
+.cell.color4::after {
+  background: rgba(255,255,255,calc(var(--color-4-shine, 0.15) + 0.1));
+}
+.color4.cellfake {
+  background-color: var(--color-4-tiny, var(--color-4));
 }
 
 .color5 {
-  background-color: #0081AF;
-  border: 2px solid #0081AF;
+  background-color: var(--color-5);
+  border: 2px solid var(--color-5);
+}
+.cell.color5::before {
+  background: rgba(255,255,255,var(--color-5-shine, 0.15));
+}
+.cell.color5::after {
+  background: rgba(255,255,255,calc(var(--color-5-shine, 0.15) + 0.1));
 }
 
 .color6 {
-  background-color: #c05d5d;
-  border: 2px solid #c05d5d;
+  background-color: var(--color-6);
+  border: 2px solid var(--color-6);
+}
+.cell.color6::before {
+  background: rgba(255,255,255,var(--color-6-shine, 0.15));
+}
+.cell.color6::after {
+  background: rgba(255,255,255,calc(var(--color-6-shine, 0.15) + 0.1));
 }
 
 .color7 {
-  background-color: #01161E;
-  border: 2px solid #01161E;
+  background-color: var(--color-7);
+  border: 2px solid var(--color-7);
+}
+.cell.color7::before {
+  background: rgba(255,255,255,var(--color-7-shine, 0.15));
+}
+.cell.color7::after {
+  background: rgba(255,255,255,calc(var(--color-7-shine, 0.15) + 0.1));
 }
 
 .cursor {

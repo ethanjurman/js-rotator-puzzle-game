@@ -20,6 +20,7 @@ try {
     "config-color-blind": localStorage.getItem("config-color-blind") || "0",
     "config-cpu-1": checkForCPUConfig(1) || localStorage.getItem("config-cpu-1") || "0",
     "config-cpu-2": checkForCPUConfig(2) || localStorage.getItem("config-cpu-2") || "0",
+    "config-color-theme": localStorage.getItem("config-color-theme"),
   }
   const root = document.documentElement;
   root.style.setProperty('--color-blind-mode', config["config-color-blind"]);
@@ -38,15 +39,23 @@ try {
     "config-color-blind": "0",
     "config-cpu-1": checkForCPUConfig(1) || "0",
     "config-cpu-2": checkForCPUConfig(2) || "0",
+    "config-color-theme": "color-theme-1",
   }
 }
-
-const isTwoPlayer = window.location.href.includes('twoPlayer');
 
 const configModal = () => `
   <div class="modal show-modal config-modal">
     <div class="title" style="display:flex; justify-content: center; margin-bottom: 30px">
     ${[..."Settings"].map(c => `<span class="title-block" style="margin-right: 5px">${c}</span>`).join("")}
+    </div>
+    <div class="config-color-theme">
+    <span class="config-label">Color Theme</span><br />
+    <input type="radio" id="color-theme-1" name="age" ${config['config-color-theme'] === 'color-theme-1' ? 'checked' : ''} onclick="updateColorTheme('color-theme-1')">
+    <label for="color-theme-1">Standard</label>
+    <input type="radio" id="color-theme-2" name="age" ${config['config-color-theme'] === 'color-theme-2' ? 'checked' : ''} onclick="updateColorTheme('color-theme-2')">
+    <label for="color-theme-2">Puyo-Puyo</label>  
+    <input type="radio" id="color-theme-3" name="age" ${config['config-color-theme'] === 'color-theme-3' ? 'checked' : ''} onclick="updateColorTheme('color-theme-3')">
+    <label for="color-theme-3">Rubik's</label>
     </div>
     <div class="config-color-blind">Color Blind <input type="checkbox" id="config-color-blind" ${config['config-color-blind'] != '0' ? 'checked' : ''} />
       <div class="cellfake color1" style="position: inherit;"></div>
@@ -186,4 +195,18 @@ const createConfigModalButton = () => {
   document.body.appendChild(modalButton);
 }
 
+const updateColorTheme = (theme) => {
+  if (!theme) {
+    theme = config['config-color-theme'] || 'color-theme-1';
+  }
+  config['config-color-theme'] = theme;
+  document.documentElement.className = theme;
+  try {
+    localStorage.setItem('config-color-theme', theme);
+  } catch (e) {
+    // do nothing
+  }
+}
+
+updateColorTheme(); // should run at start
 createConfigModalButton();

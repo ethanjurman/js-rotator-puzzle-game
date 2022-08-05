@@ -169,7 +169,7 @@ const queueChainReset = () => {
     chain = 1;
     clearInterval(chainInternval);
     hideChainElement();
-  }, 2500)
+  }, 2750)
 }
 
 const clearColumns = () => {
@@ -192,10 +192,12 @@ const clearColumns = () => {
       const cells = document.querySelectorAll(`[data-x="${i}"]`);
       const growingScore = newScoreValue - scoreValue;
       newScoreValue = scoreValue + growingScore + (cells.length * chain);
-      cells.forEach(cell => cell.classList.add('remove'));
+      [...cells].sort((a, b) => a.dataset.y - b.dataset.y).forEach((cell, index) => {
+        setTimeout(() => cell.classList.add('remove'), 50 * index);
+      });
       setTimeout(() => {
         cells.forEach(cell => cell.remove());
-      }, 200)
+      }, 400)
       wereItemsRemoved = true;
       showChainElement();
       queueChainReset()
@@ -226,10 +228,12 @@ const clearRows = () => {
       const cells = document.querySelectorAll(`[data-y="${i}"]`);
       const growingScore = newScoreValue - scoreValue;
       newScoreValue = scoreValue + growingScore + (cells.length * chain);
-      cells.forEach(cell => cell.classList.add('remove'));
+      [...cells].sort((a, b) => a.dataset.x - b.dataset.x).forEach((cell, index) => {
+        setTimeout(() => cell.classList.add('remove'), 50 * index);
+      });
       setTimeout(() => {
         cells.forEach(cell => cell.remove());
-      }, 200)
+      }, 400)
       wereItemsRemoved = true;
       showChainElement();
       queueChainReset();

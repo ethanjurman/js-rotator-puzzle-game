@@ -31,18 +31,13 @@ const startOver = () => {
 }
 
 const startEndless = () => {
-  const modal = document.querySelector('.modal');
-  modal.classList.add('remove-modal');
   // reset game states
   endGame = false;
   startTime = -1;
   const timerEle = document.querySelector('.timerContainer');
   timerEle.remove();
+  closeWelcomeModal();
   startGameOverCheck();
-
-  setTimeout(() => {
-    modal.remove();
-  }, 500)
 }
 
 const startGameOverCheck = () => {

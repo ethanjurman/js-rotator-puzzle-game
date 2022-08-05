@@ -200,7 +200,7 @@ const makePlayer = (playerId, playerSeed = seed) => {
       chain = 1;
       clearInterval(chainInternval);
       hideChainElement(`.grid.player-${playerId} > .chain-counter`);
-    }, 2500)
+    }, 2750)
   }
 
   const clearColumns = () => {
@@ -223,10 +223,12 @@ const makePlayer = (playerId, playerSeed = seed) => {
         const cells = document.querySelectorAll(`.player-${playerId} > .cell[data-x="${i}"]`);
         const growingScore = newScoreValue - scoreValue;
         newScoreValue = scoreValue + growingScore + (cells.length * chain);
-        cells.forEach(cell => cell.classList.add('remove'));
+        [...cells].sort((a, b) => a.dataset.y - b.dataset.y).forEach((cell, index) => {
+          setTimeout(() => cell.classList.add('remove'), 50 * index);
+        });
         setTimeout(() => {
           cells.forEach(cell => cell.remove());
-        }, 200)
+        }, 400)
         wereItemsRemoved = true;
         showChainElement(`.grid.player-${playerId} > .chain-counter`);
         queueChainReset();
@@ -258,10 +260,12 @@ const makePlayer = (playerId, playerSeed = seed) => {
         const cells = document.querySelectorAll(`.player-${playerId} > .cell[data-y="${i}"]`);
         const growingScore = newScoreValue - scoreValue;
         newScoreValue = scoreValue + growingScore + (cells.length * chain);
-        cells.forEach(cell => cell.classList.add('remove'));
+        [...cells].sort((a, b) => a.dataset.x - b.dataset.x).forEach((cell, index) => {
+          setTimeout(() => cell.classList.add('remove'), 50 * index);
+        });
         setTimeout(() => {
           cells.forEach(cell => cell.remove());
-        }, 200)
+        }, 400)
         wereItemsRemoved = true;
         showChainElement(`.grid.player-${playerId} > .chain-counter`);
         queueChainReset();

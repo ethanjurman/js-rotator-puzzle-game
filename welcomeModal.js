@@ -1,3 +1,4 @@
+const isTwoPlayer = window.location.href.includes('twoPlayer');
 const welcomeModal = `
   <div class="modal">
     <div class="super-title">Welcome to...</div>
@@ -13,7 +14,7 @@ const welcomeModal = `
     <span class="title-block">O</span>
     <span class="title-block">R</span>
     </div>
-    ${window.location.href.includes('twoPlayer') ?
+    ${isTwoPlayer ?
     `<div class="title">
       <span class="title-block" style="font-size:45px; padding-right: 10px; padding-bottom: 10px;">V</span>
       <span class="title-block" style="font-size:45px; padding-right: 10px; padding-bottom: 10px;">E</span>
@@ -25,10 +26,10 @@ const welcomeModal = `
   }
     <div class="content" onscroll="scrollModal()">
       <p><b>JS ROTATOR</b> is a JavaScript web puzzle game inspired by games like Yoshi's Cookie & Tetris.<br/>Made by Ethan Jurman.</p>
-      ${window.location.href.includes('twoPlayer')
+      ${isTwoPlayer
     ? `<p>Move the cursor by pushing <span style="color:F4D06F">WASD</span> (for player 1)<br /> and <span style="color:F4D06F">UP, DOWN, LEFT and RIGHT</span> (for player 2).<br />Rotate a section of 4 blocks by pushing <span style="color:F4D06F">space</span> (for player 1) and <span style="color:F4D06F">Z</span> (for player 2).</p>`
     : `<p>Move the cursor by pushing <span style="color:F4D06F">WASD</span> or <span style="color:F4D06F">UP, DOWN, LEFT and RIGHT</span> on the keyboard.<br />Rotate a section of 4 blocks by pushing <span style="color:F4D06F">space<span> or <span style="color:F4D06F">Z</span>.</p>`}
-      ${window.location.href.includes('twoPlayer') ? '' : `<p>On mobile & touch devices, <span style="color:F4D06F">tap on the screen</span> inbetween the four blocks you want to rotate.</p>`}
+      ${isTwoPlayer ? '' : `<p>On mobile & touch devices, <span style="color:F4D06F">tap on the screen</span> inbetween the four blocks you want to rotate.</p>`}
       <img src="./gifs/rotate.gif">
       <p>Match an entire row or column of blocks with the same color to get points and extra time.</p>
       <img src="./gifs/row-clear.gif">
@@ -37,13 +38,13 @@ const welcomeModal = `
       <img src="./gifs/combo.gif">
       <p>Push <span style="color:F4D06F">Escape</span> or <span onclick="closeWelcomeModal(); setTimeout(() => createConfigureModal(), 500)" style="color:F4D06F; cursor:pointer;">click here for configuration.</span></p>
     </div>
-    ${window.location.href.includes('twoPlayer')
+    ${isTwoPlayer
     ? `<div class="start-button" onclick="copyRoomCode()">Copy Room Code (for online multiplayer)</div>`
     : `<div class="start-button" onclick="startEndless()">Start Endless (no timer)</div>`
   }
     <div>
       <div class="start-button" onclick="closeWelcomeModal()">Click Here to Start!</div>
-    ${window.location.href.includes('twoPlayer')
+    ${isTwoPlayer
     ? `<a href="./index.html"><div class="start-button">Go to Single Player</div></a>`
     : `<a href="./twoPlayer.html"><div class="start-button">Go to Two Player</div></a>`
   }
@@ -70,12 +71,12 @@ const showTitle = () => {
 }
 
 const closeWelcomeModal = () => {
-  unpauseGame();
   const modal = document.querySelector('.modal');
   modal.classList.add('remove-modal');
   setTimeout(() => {
     modal.remove();
   }, 500)
+  unpauseGame();
   unpauseTime();
 }
 
