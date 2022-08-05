@@ -89,6 +89,28 @@ body {
   border-radius: 10px;
   box-shadow: 0px 2px 2px #201f20;
 }
+.cell::before {
+  content: "";
+  width: 50px;
+  height: 28px;
+  background: rgba(255,255,255, 0.15);
+  position: fixed;
+  border-radius: 18px 18px 100% 100%;
+}
+.cell::after {
+  content: "";
+  width: 50px;
+  height: 47px;
+  background: rgba(255,255,255,0.2);
+  position: fixed;
+  border-radius: 11px;
+}
+.cell.color2:before {
+  background: rgba(255,255,255,0.7);
+}
+.cell.color2:after {
+  background: rgba(255,255,255,0.8);
+}
 .cellfake {
   display:inline-block;
   width: 20px;
@@ -98,6 +120,9 @@ body {
   transition: all 0.1s;
   border-radius: 4px;
   box-shadow: 0px 2px 2px #201f20;
+}
+.cellfake.color2 {
+  background-color: #fff;
 }
 
 .remove {
@@ -110,7 +135,7 @@ body {
   background-size: calc(var(--color-blind-mode) * 50px);
   background-blend-mode: soft-light;
 }
-.cell.color2, .cellfake.color2 {
+.cell.color2::after, .cellfake.color2 {
   background-image: url('./game-icons/two-icon.png');
   background-size: calc(var(--color-blind-mode) * 50px);
 }
@@ -126,23 +151,27 @@ body {
 }
 
 .color1 {
-  background-color: #FF9933;
-  border: 2px solid #FF9933;
+  background-color: #df8022;
+  border: 2px solid #df8022;
 }
 
+.cell.color2 {
+  background-color: #bbb;
+  border: 2px solid #bbb;
+}
 .color2 {
-  background-color: #ffffff;
-  border: 2px solid #ffffff;
+  background-color: #fff;
+  border: 2px solid #fff;
 }
 
 .color3 {
-  background-color: #C091CA;
-  border: 2px solid #C091CA;
+  background-color: #a975b5;
+  border: 2px solid #a975b5;
 }
 
 .color4 {
-  background-color: #5DC0B5;
-  border: 2px solid #5DC0B5;
+  background-color: #4bbfb2;
+  border: 2px solid #4bbfb2;
 }
 
 .color5 {
@@ -157,7 +186,7 @@ body {
 
 .color7 {
   background-color: #01161E;
-  border: 2px solid #616161;
+  border: 2px solid #01161E;
 }
 
 .cursor {
@@ -353,7 +382,7 @@ body {
     transform: rotate(0deg);
   }
 }
-.start-button, .endless-button {
+.start-button, .endless-button, .instructions-button {
   display: inline-block;
   background: #F4D06F;
   color: black;
@@ -368,6 +397,9 @@ body {
 }
 .endless-button {
   animation-delay: 9s;
+}
+.instructions-button {
+  animation-delay: 7.5s;
 }
 .scores {
   font-size: 60px;
@@ -457,4 +489,12 @@ body {
   text-shadow: 0px 0px 3px white;
   cursor: pointer;
   z-index: 30;
+}
+#cpu-1-level, #cpu-2-level {
+  width: 50px;
+  transform: translate(-6px, -4px) !important;
+}
+.config-cpu-level, #cpu-1-level, #cpu-2-level {
+  display: inline-block;
+  transform: translate(0px, -4px);
 }

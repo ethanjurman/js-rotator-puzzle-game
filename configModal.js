@@ -1,3 +1,9 @@
+const checkForCPUConfig = (playerId) => {
+  const searchParams = new URLSearchParams(window.location.search);
+  const cpuLevel = searchParams.get(`cpu${playerId}`);
+  return Number(cpuLevel);
+}
+
 let config;
 try {
   config = {
@@ -12,6 +18,8 @@ try {
     "config-p2-left": localStorage.getItem("config-p2-left") || "ArrowRight",
     "config-p2-rotate": localStorage.getItem("config-p2-rotate") || "z",
     "config-color-blind": localStorage.getItem("config-color-blind") || "0",
+    "config-cpu-1": checkForCPUConfig(1) || localStorage.getItem("config-cpu-1") || "0",
+    "config-cpu-2": checkForCPUConfig(2) || localStorage.getItem("config-cpu-2") || "0",
   }
   const root = document.documentElement;
   root.style.setProperty('--color-blind-mode', config["config-color-blind"]);
@@ -28,12 +36,16 @@ try {
     "config-p2-left": "ArrowRight",
     "config-p2-rotate": "z",
     "config-color-blind": "0",
+    "config-cpu-1": checkForCPUConfig(1) || "0",
+    "config-cpu-2": checkForCPUConfig(2) || "0",
   }
 }
 
+const isTwoPlayer = window.location.href.includes('twoPlayer');
+
 const configModal = () => `
   <div class="modal show-modal config-modal">
-    <div class="title" style="display:flex; justify-content: space-between; margin-bottom: 30px">
+    <div class="title" style="display:flex; justify-content: center; margin-bottom: 30px">
     ${[..."Settings"].map(c => `<span class="title-block" style="margin-right: 5px">${c}</span>`).join("")}
     </div>
     <div class="config-color-blind">Color Blind <input type="checkbox" id="config-color-blind" ${config['config-color-blind'] != '0' ? 'checked' : ''} />
@@ -43,9 +55,11 @@ const configModal = () => `
       <div class="cellfake color4" style="position: inherit;"></div>
     </div>
     <div class="config-sound">Sound <input type="range" id="config-sound" min="0" max="1" step="0.1" value=${localStorage.getItem('config-sound') || 0.5} /></div>
+    <div class="instructions-button" onclick="closeConfigureModal(); createWelcomeModal()" style="margin-top: 30px">Open Instructions</div>
     <div class="config">
       <div class="config-p1" style="margin-right: 5px">
         <div>PLAYER 1</div>
+        ${isTwoPlayer ? `<div class="config-cpu"><span class="config-cpu-level">CPU 1</span> <span id="cpu-1-level">(${config["config-cpu-1"] || "OFF"})</span><input type="range" id="config-cpu-1" min="0" max="11" step="1" value=${config["config-cpu-1"]} /></div>` : ''}
         <div>UP: <input onkeyup="configItem('config-p1-up')(event)" list="keyboard-buttons" id="config-p1-up" value="${config["config-p1-up"]}" /></div>
         <div>DOWN: <input onkeyup="configItem('config-p1-down')(event)" list="keyboard-buttons" id="config-p1-down" value="${config["config-p1-down"]}" /></div>
         <div>LEFT: <input onkeyup="configItem('config-p1-right')(event)" list="keyboard-buttons" id="config-p1-right" value="${config["config-p1-right"]}" /></div>
@@ -55,6 +69,7 @@ const configModal = () => `
       </div>
       <div class="config-p2" style="margin-left: 5px">
         <div>PLAYER 2</div>
+        ${isTwoPlayer ? `<div class="config-cpu"><span class="config-cpu-level">CPU 2</span> <span id="cpu-2-level">(${config["config-cpu-2"] || "OFF"})</span><input type="range" id="config-cpu-2" min="0" max="11" step="1" value=${config["config-cpu-2"]} /></div>` : ''}
         <div>UP: <input onkeyup="configItem('config-p2-up')(event)" list="keyboard-buttons" id="config-p2-up" value="${config["config-p2-up"]}" /></div>
         <div>DOWN: <input onkeyup="configItem('config-p2-down')(event)" list="keyboard-buttons" id="config-p2-down" value="${config["config-p2-down"]}" /></div>
         <div>LEFT: <input onkeyup="configItem('config-p2-right')(event)" list="keyboard-buttons" id="config-p2-right" value="${config["config-p2-right"]}" /></div>
@@ -95,6 +110,30 @@ const createConfigureModal = () => {
       // do nothing
     }
   })
+  if (isTwoPlayer) {
+    const configCPU1 = document.querySelector('#config-cpu-1');
+    configCPU1.addEventListener('input', (evt) => {
+      config['config-cpu-1'] = (evt.target.value)
+      document.querySelector("#cpu-1-level").innerHTML = `(${Number(config['config-cpu-1']) || 'OFF'})`;
+      checkForCPU(1);
+      try {
+        localStorage.setItem('config-cpu-1', evt.target.value);
+      } catch (e) {
+        // do nothing
+      }
+    })
+    const configCPU2 = document.querySelector('#config-cpu-2');
+    configCPU2.addEventListener('input', (evt) => {
+      config['config-cpu-2'] = (evt.target.value)
+      document.querySelector("#cpu-2-level").innerHTML = `(${Number(config['config-cpu-2']) || 'OFF'})`;
+      checkForCPU(2);
+      try {
+        localStorage.setItem('config-cpu-2', evt.target.value);
+      } catch (e) {
+        // do nothing
+      }
+    })
+  }
 }
 
 const closeConfigureModal = () => {

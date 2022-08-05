@@ -1,6 +1,8 @@
 const checkForCPU = (playerId) => {
-  const searchParams = new URLSearchParams(window.location.search);
-  const cpuLevel = searchParams.get(`cpu${playerId}`);
+  const cpuLevel = config[`config-cpu-${playerId}`];
+  if (cpuWorkMap[`cpu-${playerId}`]) {
+    clearTimeout(cpuWorkMap[`cpu-${playerId}`]);
+  }
   if (Number(cpuLevel)) {
     makeCPU(playerId, cpuLevel);
   }
@@ -11,32 +13,56 @@ const cloneBoard = (boardState) => {
 }
 
 let cpuOn;
+const cpuWorkMap = {};
 const makeCPU = (playerId, level) => {
+  const cpuMoveQueue = [];
   const rotateCells = playerId === 1 ? rotateP1 : rotateP2;
   const updateCursor = playerId === 1 ? updateCursorP1 : updateCursorP2;
   const getCursorPos = playerId === 1 ? getCursorP1 : getCursorP2;
 
-  cpuOn = setInterval(() => {
-    setTimeout(() => {
-      if (paused || endGame) {
-        return;
-      }
-      const boardState = getBoardState(playerId);
-      const { score, moves } = tryBoardMoves({ cpuLevel: level, boardState });
-      if (score > 0) {
-        moves.forEach((move, index) => {
-          setTimeout(() => rotateCells(move.x, move.y), 150 * index)
-        })
-      }
-      const boardHeatMove = tryBoardHeatMove({ cpuLevel: level, boardState });
-      if (score === 0 && boardHeatMove) {
-        setTimeout(() => rotateCells(boardHeatMove.moves[0].x, boardHeatMove.moves[0].y), 350)
-      }
-      if (score === 0 && !boardHeatMove) {
-        rotateCells(Math.floor(Math.random() * 5), Math.floor(Math.random() * 5));
-      }
-    }, Math.random() * 500);
-  }, 850)
+  function cpuOn() {
+    if (paused || endGame || startTime < 0) {
+      cpuWorkMap[`cpu-${playerId}`] = setTimeout(cpuOn, 1000)
+      return;
+    }
+    if (cpuMoveQueue.length > 0) {
+      cpuWorkMap[`cpu-${playerId}`] = setTimeout(() => {
+        const { x, y } = getCursorPos();
+        const desiredX = cpuMoveQueue[0].x;
+        const desiredY = cpuMoveQueue[0].y;
+        if (desiredX != x) {
+          desiredX > x ? updateCursor(x + 1, y) : updateCursor(x - 1, y)
+        } else if (cpuMoveQueue[0].y != y) {
+          desiredY > y ? updateCursor(x, y + 1) : updateCursor(x, y - 1)
+        } else {
+          rotateCells(x, y);
+          cpuMoveQueue.shift();
+        }
+        cpuOn();
+      }, 300 / (level / 2));
+    }
+    if (cpuMoveQueue.length === 0) {
+      cpuWorkMap[`cpu-${playerId}`] = setTimeout(() => {
+        const boardState = getBoardState(playerId);
+        const { score, moves } = tryBoardMoves({ cpuLevel: Math.min(Math.max(level, 3), 8), boardState }); // after level 8, just go faster
+        if (score > 0) {
+          moves.forEach((move) => {
+            cpuMoveQueue.push(move)
+          })
+        }
+        const boardHeatMove = tryBoardHeatMove({ cpuLevel: Math.min(Math.max(level, 3), 8), boardState }); // after level 8, just go faster
+        if (score === 0 && boardHeatMove) {
+          cpuMoveQueue.push(boardHeatMove.moves[0])
+        }
+        if (score === 0 && !boardHeatMove) {
+          cpuMoveQueue.push({ x: Math.floor(Math.random() * 4), y: Math.floor(Math.random() * 4) })
+        }
+        cpuOn();
+      }, (Math.random() + 0.5) * 500);
+    }
+  }
+
+  cpuOn();
 }
 
 const getBoardState = (playerId) => {
@@ -51,8 +77,8 @@ const tryBoardMoves = ({ cpuLevel, boardState, moves = [], score = 0 }) => {
   const lastMove = moves[moves.length - 1];
   let xMin = 0;
   let yMin = 0;
-  let xMax = 5;
-  let yMax = 5;
+  let xMax = 4;
+  let yMax = 4;
   if (moves.length < cpuLevel) {
     if (lastMove) {
       xMin = Math.max(lastMove.x - 1, 0);

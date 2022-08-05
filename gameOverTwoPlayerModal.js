@@ -1,6 +1,6 @@
 const gameOverModal = (string, newScore1, newScore2, pointScore1, pointScore2) => `
   <div class="modal show-modal">
-    <div class="title" style="display:flex; justify-content: space-between; margin-bottom: 30px">
+    <div class="title" style="display:flex; justify-content: center; margin-bottom: 30px">
     ${[...string].map(c => {
   if (c) { return `<span class="title-block" style="margin-right: 5px">${c}</span>` }
   return `<span class="title-block spacer"> </span>`

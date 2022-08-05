@@ -34,7 +34,10 @@ const makePlayer = (playerId, playerSeed = seed) => {
     return COLORS[Math.floor(random() * COLORS.length)];
   }
 
-  const getCursorPos = () => cursorPos
+  const getCursorPos = () => {
+    const { x, y } = document.querySelector(`.player-${playerId} > .cursor`).dataset;
+    return { x: Number(x), y: Number(y) };
+  };
 
   const makeCell = (x, y) => {
     const cell = document.createElement('div');
@@ -61,7 +64,10 @@ const makePlayer = (playerId, playerSeed = seed) => {
 
   const makeCursor = () => {
     const cursor = document.createElement('div');
-    cursor.setAttribute('class', 'cursor');
+    cursor.classList.add(`cursor`);
+    cursor.classList.add(`playerId-${playerId}`);
+    cursor.dataset.x = 0;
+    cursor.dataset.y = 0;
     return cursor;
   }
 
@@ -115,29 +121,34 @@ const makePlayer = (playerId, playerSeed = seed) => {
     }
     if (playerId === 1 ? ev.key === config["config-p1-up"] : ev.key === config["config-p2-up"]) {
       cursorPos = { x: cursorPos.x, y: cursorPos.y ? cursorPos.y - 1 : GRID_HEIGHT_SIZE - 2 }
+      updateCursor();
     }
     if (playerId === 1 ? ev.key === config["config-p1-right"] : ev.key === config["config-p2-right"]) {
       cursorPos = { x: cursorPos.x ? cursorPos.x - 1 : GRID_WIDTH_SIZE - 2, y: cursorPos.y }
+      updateCursor();
     }
     if (playerId === 1 ? ev.key === config["config-p1-down"] : ev.key === config["config-p2-down"]) {
       cursorPos = { x: cursorPos.x, y: (cursorPos.y + 1) % (GRID_HEIGHT_SIZE - 1) }
+      updateCursor();
     }
     if (playerId === 1 ? ev.key === config["config-p1-left"] : ev.key === config["config-p2-left"]) {
       cursorPos = { x: (cursorPos.x + 1) % (GRID_WIDTH_SIZE - 1), y: cursorPos.y }
+      updateCursor();
     }
     if (playerId === 1 ? ev.key === config["config-p1-rotate"] : ev.key === config["config-p2-rotate"]) {
       rotateCells();
     }
-    updateCursor();
   });
 
   const updateCursor = (x = cursorPos.x, y = cursorPos.y) => {
     const cursor = document.querySelector(`.player-${playerId} > .cursor`);
+    cursor.dataset.x = x;
+    cursor.dataset.y = y;
     cursor.style = `left: ${CELL_WIDTH * x}px; top: ${CELL_HEIGHT * y}px;`
   }
 
   const getCellItem = (x, y) => {
-    return document.querySelector(`.player-${playerId} > [data-x="${x}"][data-y="${y}"]`)
+    return document.querySelector(`.player-${playerId} > .cell[data-x="${x}"][data-y="${y}"]`)
   }
 
   const rotateCells = (x = cursorPos.x, y = cursorPos.y, remote) => {
@@ -209,7 +220,7 @@ const makePlayer = (playerId, playerSeed = seed) => {
         }
       }
       if (color && color !== 'UNREGISTERED') {
-        const cells = document.querySelectorAll(`.player-${playerId} > [data-x="${i}"]`);
+        const cells = document.querySelectorAll(`.player-${playerId} > .cell[data-x="${i}"]`);
         const growingScore = newScoreValue - scoreValue;
         newScoreValue = scoreValue + growingScore + (cells.length * chain);
         cells.forEach(cell => cell.classList.add('remove'));
@@ -244,7 +255,7 @@ const makePlayer = (playerId, playerSeed = seed) => {
         }
       }
       if (color && color !== 'UNREGISTERED') {
-        const cells = document.querySelectorAll(`.player-${playerId} > [data-y="${i}"]`);
+        const cells = document.querySelectorAll(`.player-${playerId} > .cell[data-y="${i}"]`);
         const growingScore = newScoreValue - scoreValue;
         newScoreValue = scoreValue + growingScore + (cells.length * chain);
         cells.forEach(cell => cell.classList.add('remove'));

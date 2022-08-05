@@ -53,9 +53,11 @@ const welcomeModal = `
 `
 
 const createWelcomeModal = () => {
+  pauseGame();
   const modal = document.createElement('div');
   modal.innerHTML = welcomeModal;
   document.body.appendChild(modal);
+  showTitle();
 }
 
 const showTitle = () => {
@@ -68,11 +70,13 @@ const showTitle = () => {
 }
 
 const closeWelcomeModal = () => {
+  unpauseGame();
   const modal = document.querySelector('.modal');
   modal.classList.add('remove-modal');
   setTimeout(() => {
     modal.remove();
   }, 500)
+  unpauseTime();
 }
 
 const scrollModal = () => {
@@ -101,5 +105,4 @@ const copyRoomCode = () => {
 
 if (!window.location.search.includes('welcomeModal=false')) {
   createWelcomeModal();
-  showTitle();
 }
