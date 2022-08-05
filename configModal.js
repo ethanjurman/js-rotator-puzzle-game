@@ -52,6 +52,8 @@ const configModal = () => `
     <span class="config-label">Color Theme</span><br />
     <input type="radio" id="color-theme-1" name="age" ${config['config-color-theme'] === 'color-theme-1' ? 'checked' : ''} onclick="updateColorTheme('color-theme-1')">
     <label for="color-theme-1">Standard</label>
+    <input type="radio" id="color-theme-4" name="age" ${config['config-color-theme'] === 'color-theme-4' ? 'checked' : ''} onclick="updateColorTheme('color-theme-4')">
+    <label for="color-theme-4">Flat</label>
     <input type="radio" id="color-theme-2" name="age" ${config['config-color-theme'] === 'color-theme-2' ? 'checked' : ''} onclick="updateColorTheme('color-theme-2')">
     <label for="color-theme-2">Puyo-Puyo</label>  
     <input type="radio" id="color-theme-3" name="age" ${config['config-color-theme'] === 'color-theme-3' ? 'checked' : ''} onclick="updateColorTheme('color-theme-3')">

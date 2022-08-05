@@ -72,6 +72,22 @@ a {
   --color-6: #009b48;
   --color-7: #01161E;
 }
+:root.color-theme-4 {
+  --color-1: #FF9933;
+  --color-1-shine: -1;
+  --color-2: #ffffff;
+  --color-2-shine: -1;
+  --color-3: #C091CA;
+  --color-3-shine: -1;
+  --color-4: #5DC0B5;
+  --color-4-shine: -1;
+  --color-5: #0081AF;
+  --color-5-shine: -1;
+  --color-6: #c05d5d;
+  --color-6-shine: -1;
+  --color-7: #01161E;
+  --color-7-shine: -1;
+}
 
 html,
 body {
@@ -196,10 +212,10 @@ body {
   border: 2px solid var(--color-1);
 }
 .cell.color1::before {
-  background: rgba(255,255,255,var(--color-1-shine, 0.15));
+  background: rgba(255,255,255,var(--color-1-shine, 0.05));
 }
 .cell.color1::after {
-  background: rgba(255,255,255,calc(var(--color-1-shine, 0.15) + 0.1));
+  background: rgba(255,255,255,calc(var(--color-1-shine, 0.05) + 0.1));
 }
 .color1.cellfake {
   background-color: var(--color-1-tiny, var(--color-1));
