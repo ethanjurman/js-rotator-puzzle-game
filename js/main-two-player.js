@@ -206,8 +206,10 @@ const makePlayer = (playerId, playerSeed = seed) => {
   const clearColumns = () => {
     let wereItemsRemoved = false;
     for (let i = 0; i < GRID_WIDTH_SIZE; i++) {
+      if (wereItemsRemoved) { continue; } // only clear one column at a time
       let color = 'UNREGISTERED';
       for (let j = 0; j < GRID_HEIGHT_SIZE; j++) {
+        if (wereItemsRemoved) { continue; } // only clear one column at a time
         const cellItem = getCellItem(i, j);
         if (!cellItem) {
           continue;
@@ -243,8 +245,10 @@ const makePlayer = (playerId, playerSeed = seed) => {
   const clearRows = () => {
     let wereItemsRemoved = false;
     for (let i = 0; i < GRID_WIDTH_SIZE; i++) {
+      if (wereItemsRemoved) { continue; } // only clear one row at a time
       let color = 'UNREGISTERED';
       for (let j = 0; j < GRID_HEIGHT_SIZE; j++) {
+        if (wereItemsRemoved) { continue; } // only clear one row at a time
         const cellItem = getCellItem(j, i);
         if (!cellItem) {
           continue;

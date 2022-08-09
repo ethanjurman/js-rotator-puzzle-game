@@ -175,8 +175,10 @@ const queueChainReset = () => {
 const clearColumns = () => {
   let wereItemsRemoved = false;
   for (let i = 0; i < GRID_WIDTH_SIZE; i++) {
+    if (wereItemsRemoved) { continue; } // only clear one column at a time
     let color = 'UNREGISTERED';
     for (let j = 0; j < GRID_HEIGHT_SIZE; j++) {
+      if (wereItemsRemoved) { continue; } // only clear one column at a time
       const cellItem = getCellItem(i, j);
       if (!cellItem) {
         continue;
@@ -190,6 +192,7 @@ const clearColumns = () => {
     }
     if (color && color !== 'UNREGISTERED') {
       const cells = document.querySelectorAll(`[data-x="${i}"]`);
+      // addToCounter(1, color, cells.length);
       const growingScore = newScoreValue - scoreValue;
       newScoreValue = scoreValue + growingScore + (cells.length * chain);
       [...cells].sort((a, b) => a.dataset.y - b.dataset.y).forEach((cell, index) => {
@@ -211,8 +214,10 @@ const clearColumns = () => {
 const clearRows = () => {
   let wereItemsRemoved = false;
   for (let i = 0; i < GRID_WIDTH_SIZE; i++) {
+    if (wereItemsRemoved) { continue; } // only clear one row at a time
     let color = 'UNREGISTERED';
     for (let j = 0; j < GRID_HEIGHT_SIZE; j++) {
+      if (wereItemsRemoved) { continue; } // only clear one row at a time
       const cellItem = getCellItem(j, i);
       if (!cellItem) {
         continue;
@@ -226,6 +231,7 @@ const clearRows = () => {
     }
     if (color && color !== 'UNREGISTERED') {
       const cells = document.querySelectorAll(`[data-y="${i}"]`);
+      // addToCounter(1, color, cells.length);
       const growingScore = newScoreValue - scoreValue;
       newScoreValue = scoreValue + growingScore + (cells.length * chain);
       [...cells].sort((a, b) => a.dataset.x - b.dataset.x).forEach((cell, index) => {

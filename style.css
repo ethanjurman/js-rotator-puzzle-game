@@ -605,3 +605,20 @@ body {
   display: inline-block;
   transform: translate(0px, -4px);
 }
+.tower {
+  width: 12px;
+  height: 180px;
+  background: #392f5a;
+  position: absolute;
+  right: -20px;
+  top: 270px;
+  border-radius: 20px;
+  box-shadow: 4px 4px 5px black;
+}
+.towerFill {
+  width: 100%;
+  border-radius: 20px;
+  position: absolute;
+  bottom: 0px;
+  background: white;
+}
