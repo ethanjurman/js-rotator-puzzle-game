@@ -314,7 +314,7 @@ const makePlayer = (playerId, playerSeed = seed) => {
     const areItemsCurrentlyBeingRemoved = document.querySelector(`.player-${playerId} > .remove`)
     if (createHold && !areItemsCurrentlyBeingRemoved) { // if create hold is true, allow clearing items
       const wereItemsRemovedFromColumns = clearColumns() && chain++;
-      const wereItemsRemovedFromRows = clearRows() && chain++;
+      const wereItemsRemovedFromRows = !wereItemsRemovedFromColumns && clearRows() && chain++;
       if (!wereItemsRemovedFromColumns && !wereItemsRemovedFromRows) {
         createHold = false;
       }
